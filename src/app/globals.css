@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@source "../**/*.{js,ts,jsx,tsx,mdx}";
+
 @font-face {
   font-family: "Nighty";
   src: url("/fonts/Nighty.otf") format("opentype");
@@ -230,9 +233,73 @@
   font-display: swap;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  /* Fonts */
+  --font-sans: "BLMelody", sans-serif;
+  --font-heading: "BLMelody", sans-serif;
+  --font-nighty: "Nighty", sans-serif;
+  --font-newake: "Newake", sans-serif;
+  --font-geist: "Geist", sans-serif;
+  --font-geistmono: "GeistMono", monospace;
+  --font-clash: "ClashDisplay", sans-serif;
+  --font-satoshi: "Satoshi", sans-serif;
+  --font-worksans: "WorkSans", sans-serif;
+  --font-vercetti: "Vercetti", sans-serif;
+  --font-switzer: "Switzer", sans-serif;
+  --font-array: "Array", sans-serif;
+  --font-author: "Author", serif;
+  --font-blmelody: "BLMelody", sans-serif;
+  --font-blmelodymono: "BLMelodyMono", monospace;
+  --font-generalsans: "GeneralSans", sans-serif;
+  --font-hkgrotesk: "HKGroteskWide", sans-serif;
+  --font-jetbrains: "JetBrainsMono", monospace;
+  --font-lora: "Lora", serif;
+  --font-jakarta: "PlusJakartaSans", sans-serif;
+  --font-jellee: "Jellee", sans-serif;
+  --font-hind: "Hind", sans-serif;
+  --font-airone: "Airone", sans-serif;
+  --font-advercase: "Advercase", sans-serif;
+  --font-atlantico: "Atlantico", sans-serif;
+  --font-comico: "Comico", sans-serif;
+  --font-dujitsu: "Dujitsu", sans-serif;
+  --font-kihim: "Kihim", sans-serif;
+  --font-luckybones: "Luckybones", sans-serif;
+  --font-offbit: "OffBit", monospace;
+  --font-ppmori: "PPMori", sans-serif;
+
+  /* Map HSL custom props to Tailwind v4 color tokens */
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  /* Optional chart colors if referenced */
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  /* Border radius scale tied to your --radius token */
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
 
 @layer base {
   :root {
