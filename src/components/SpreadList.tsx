@@ -44,12 +44,12 @@ export function SpreadList() {
 
   return (
     <div className="w-full h-full overflow-x-auto overflow-y-hidden spreads-scroll">
-      <div className="flex gap-8 px-1">
+      <div className="flex space-x-8">
         {isGenerating && spreads.length === 0
           ? Array.from({ length: 9 }).map((_, i) => (
               <div
                 key={`skeleton-${i}`}
-                className="flex gap-2 w-auto"
+                className="flex space-x-2 w-auto"
                 style={{ height: "48vh" }}
               >
                 <div

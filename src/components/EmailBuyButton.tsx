@@ -101,17 +101,18 @@ export function EmailBuyButton() {
                 onSubmit();
               }
             }}
+            data-form-type="other"
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="none"
             inputMode="email"
             spellCheck={false}
-            placeholder="ENTER YOUR EMAIL"
+            placeholder="email"
             disabled={disabled}
             className="w-full h-10 bg-transparent text-[24px] leading-none text-[#dadada] placeholder:text-[#dadada] outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50"
           />
           <span className="mt-1 text-[10px] text-[#7a7a7a]">
-            hit enter to confirm your email.
+            hit enter to confirm
           </span>
         </div>
       )}
