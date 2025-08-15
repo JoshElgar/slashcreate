@@ -136,7 +136,7 @@ export function TopicBar() {
           conceptId: s.id,
           prompt: `${
             s.title
-          } — topic: ${topic}. A dreamy photo-illustration hybrid with cinematic depth, selective focus, volumetric light, soft bokeh, subtle film grain, painterly details. Style: ${
+          } — topic: ${topic}. A dreamy photo-illustration hybrid with cinematic depth, selective focus, volumetric light, subtle film grain, painterly details. Style: ${
             sg.medium
           }${sg.camera ? ", " + sg.camera : ""}, ${sg.lighting}, ${
             sg.composition
