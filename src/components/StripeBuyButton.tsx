@@ -5,8 +5,16 @@ import { useBookStore } from "@/store/bookStore";
 import { animate } from "animejs";
 
 export function StripeBuyButton() {
-  const { hasGeneratedOnce, isGenerating } = useBookStore();
-  const show = hasGeneratedOnce;
+  const { hasGeneratedOnce, isGenerating, spreads } = useBookStore();
+  const anyReady = useMemo(
+    () => spreads.some((s) => s.status === "ready"),
+    [spreads]
+  );
+  const anyPending = useMemo(
+    () => spreads.some((s) => s.status === "imagePending"),
+    [spreads]
+  );
+  const show = hasGeneratedOnce && anyReady && !anyPending;
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
