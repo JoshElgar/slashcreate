@@ -14,6 +14,7 @@ export function TopicBar() {
     setPredictions,
     setGenerating,
     isGenerating,
+    setHasGeneratedOnce,
   } = useBookStore();
   const [count] = useState(12);
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,7 @@ export function TopicBar() {
         status: "imagePending" as const,
       }));
       setSpreads(spreads);
+      setHasGeneratedOnce(true);
 
       const items = spreads.map((s) => ({
         conceptId: s.id,

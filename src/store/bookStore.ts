@@ -15,6 +15,7 @@ type BookState = {
   spreads: Spread[];
   predictions: PredictionMap;
   isGenerating: boolean;
+  hasGeneratedOnce: boolean;
   setTopic: (topic: string) => void;
   reset: () => void;
   setSpreads: (spreads: Spread[]) => void;
@@ -28,6 +29,7 @@ type BookState = {
     pending: { conceptId: string; predictionId: string }[]
   ) => void;
   setGenerating: (value: boolean) => void;
+  setHasGeneratedOnce: (value: boolean) => void;
 };
 
 export const useBookStore = create<BookState>((set, get) => ({
@@ -35,6 +37,7 @@ export const useBookStore = create<BookState>((set, get) => ({
   spreads: [],
   predictions: {},
   isGenerating: false,
+  hasGeneratedOnce: false,
   setTopic: (topic) => set({ topic }),
   reset: () => set({ spreads: [], predictions: {} }),
   setSpreads: (spreads) => set({ spreads }),
@@ -71,4 +74,5 @@ export const useBookStore = create<BookState>((set, get) => ({
       return { predictions: next };
     }),
   setGenerating: (value: boolean) => set({ isGenerating: value }),
+  setHasGeneratedOnce: (value: boolean) => set({ hasGeneratedOnce: value }),
 }));
