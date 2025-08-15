@@ -67,7 +67,7 @@ export const generationRouter = router({
         const retry = await createPredictionForModel("openai/gpt-5-nano", {
           prompt:
             userPrompt +
-            "\nReturn only valid JSON. Do not include markdown. Ensure exactly 1 paragraph per concept.",
+            "\nReturn only valid JSON. Do not include markdown. Ensure exactly 1 paragraph (max 100 words) per concept.",
           system_prompt: systemPrompt,
           temperature: 0.6,
         });
