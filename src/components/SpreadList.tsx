@@ -103,7 +103,6 @@ function SpreadItem({
       if (!ref.current) return;
       animate(ref.current, {
         opacity: 0,
-        scale: 0.98,
         duration: 220,
         ease: "in(3)",
       });
