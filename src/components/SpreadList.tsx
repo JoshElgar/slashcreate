@@ -108,7 +108,7 @@ function SpreadItem({
     <div ref={ref} className="flex gap-2 w-auto" style={{ height: "48vh" }}>
       {/* Left page - Text */}
       <Card
-        className="bg-[#2a2a2a] border border-neutral-800 shadow-sm p-4 overflow-hidden flex flex-col w-auto"
+        className="bg-[#2a2a2a] border border-neutral-800 shadow-sm p-4 overflow-hidden flex flex-col w-auto relative"
         style={{ aspectRatio: "9 / 16", height: "100%" }}
       >
         <div className="flex items-start justify-between mb-3">
@@ -134,11 +134,14 @@ function SpreadItem({
             </>
           ) : null}
         </div>
+        <div className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] text-white opacity-80">
+          {spread.title}
+        </div>
       </Card>
 
       {/* Right page - Image */}
       <Card
-        className="bg-[#2a2a2a] border border-neutral-800 shadow-sm overflow-hidden flex items-center justify-center w-auto"
+        className="bg-[#2a2a2a] border border-neutral-800 shadow-sm overflow-hidden flex items-center justify-center w-auto relative"
         style={{ aspectRatio: "9 / 16", height: "100%" }}
       >
         {spread.status === "ready" && spread.imageUrl ? (
@@ -153,6 +156,9 @@ function SpreadItem({
             <div className="text-neutral-400 text-xs">Generating image…</div>
           </div>
         )}
+        <div className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] text-black opacity-80">
+          {spread.title}
+        </div>
       </Card>
     </div>
   );
