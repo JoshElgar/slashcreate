@@ -105,7 +105,11 @@ function SpreadItem({
   }, []);
 
   return (
-    <div ref={ref} className="flex gap-2 w-auto" style={{ height: "48vh" }}>
+    <div
+      ref={ref}
+      className="group flex gap-2 w-auto"
+      style={{ height: "48vh" }}
+    >
       {/* Left page - Text */}
       <Card
         className="bg-[#2a2a2a] border border-neutral-800 shadow-sm p-4 overflow-hidden flex flex-col w-auto relative"
@@ -117,7 +121,7 @@ function SpreadItem({
           </h3>
           <button
             onClick={onDelete}
-            className="inline-flex items-center justify-center size-6 border border-neutral-300 bg-white text-neutral-600 hover:bg-neutral-100 shrink-0"
+            className="inline-flex items-center justify-center size-6 border border-neutral-300 bg-white text-neutral-600 hover:bg-neutral-100 shrink-0 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity"
             aria-label="Delete spread"
           >
             <X className="size-3" />
