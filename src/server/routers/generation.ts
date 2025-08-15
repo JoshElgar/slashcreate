@@ -193,7 +193,7 @@ Return only the JSON.`;
         console.log("Creating image prediction for concept:", item.conceptId);
         const model =
           input.quality === "high"
-            ? "google/imagen-4-fast"
+            ? "ideogram-ai/ideogram-v3-turbo"
             : "black-forest-labs/flux-schnell";
         const inputPayload: Record<string, unknown> = {
           prompt: composedPrompt,
