@@ -28,7 +28,7 @@ export const generationRouter = router({
     )
     .mutation(async ({ input }) => {
       const systemPrompt =
-        'You are generating book content. Return strict JSON only. No prose. JSON shape: {\n  "concepts": [ { "title": string, "paragraphs": string[1] } ]\n}';
+        'You are generating book content. The tone should be accessible and informalm but informed. It is not an informational brochure - it\'s an interesting book written by a friend who knows a lot about the topic and is explaining the most interesting things to you in a professional way. Return strict JSON only. No prose. JSON shape: {\n  "concepts": [ { "title": string, "paragraphs": string[1] } ]\n}';
       const userPrompt = `Topic: ${input.topic}. Generate ${input.count} diverse concepts that perfectly encapsulate the topic and highlight the most interesting aspects. It's important they paint a cohesive picture when all put together - there should be shared conceptual threads woven throughout. For each, return: title (<=7 words), paragraphs (array with 1 paragraph, 100 words max). Return only JSON: { concepts: { title: string, paragraphs: string[1] }[] }.`;
 
       // Minimal input contract for Replicate OpenAI GPT-5 runner
@@ -114,7 +114,7 @@ export const generationRouter = router({
         "Creating style guide generation prediction for topic:",
         input.topic
       );
-      const prediction = await createPredictionForModel("openai/gpt-5-mini", {
+      const prediction = await createPredictionForModel("openai/gpt-5", {
         system_prompt: systemPrompt,
         prompt: userPrompt,
         temperature: 0.6,
