@@ -5,6 +5,7 @@ import {
   getPrediction,
   waitForPrediction,
 } from "../replicate";
+import { StyleGuide } from "@/types/style";
 
 const ConceptsSchema = z.object({
   concepts: z
@@ -92,6 +93,108 @@ export const generationRouter = router({
       return {
         concepts: parsed.concepts,
       };
+    }),
+
+  generateStyleGuide: procedure
+    .input(
+      z.object({
+        topic: z.string().min(1),
+        conceptTitles: z.array(z.string()).min(1).max(100).optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const StyleSchema = z.object({
+        palette: z
+          .array(
+            z.object({
+              name: z.string().optional(),
+              hex: z.string().regex(/^#?[0-9A-Fa-f]{6}$/),
+            })
+          )
+          .min(3)
+          .max(8),
+        lighting: z.string(),
+        medium: z.string(),
+        composition: z.string(),
+        camera: z.string().optional().nullable(),
+        texture: z.string().optional().nullable(),
+        influences: z.array(z.string()).min(1).max(6),
+        keywords: z.array(z.string()).min(4).max(16),
+        negativeKeywords: z.array(z.string()).min(4).max(20),
+        aspect: z.string().optional(),
+      });
+
+      const systemPrompt =
+        'You are an expert art director. Return strict JSON only. No prose. JSON shape: {"palette": {"hex": string}[], "lighting": string, "medium": string, "composition": string, "camera"?: string|null, "texture"?: string, "influences": string[], "keywords": string[], "negativeKeywords": string[], "aspect"?: string}';
+
+      const titles = input.conceptTitles?.slice(0, 12).join("; ");
+      const userPrompt = `Topic: ${
+        input.topic
+      }. Create a concise, cohesive visual style guide that will produce elegant, high-quality images across multiple related concepts. If useful, consider these concept titles: ${
+        titles ?? "(not provided)"
+      }. Keep wording compact and model-friendly.`;
+
+      const prediction = await createPredictionForModel("openai/gpt-5-nano", {
+        system_prompt: systemPrompt,
+        prompt: userPrompt,
+        temperature: 0.6,
+      });
+
+      const completed = await waitForPrediction(prediction.id, {
+        intervalMs: 1200,
+        maxMs: 60_000,
+      });
+
+      if (completed.status !== "succeeded") {
+        throw new Error(
+          `Style guide generation failed: ${
+            completed.error ?? completed.status
+          }`
+        );
+      }
+
+      const text =
+        typeof completed.output === "string"
+          ? completed.output
+          : Array.isArray(completed.output)
+          ? completed.output.join("")
+          : String(completed.output ?? "");
+
+      let parsed: z.infer<typeof StyleSchema>;
+      try {
+        parsed = StyleSchema.parse(JSON.parse(text));
+      } catch (err) {
+        const retry = await createPredictionForModel("openai/gpt-5-nano", {
+          system_prompt: systemPrompt,
+          prompt: userPrompt + "\nReturn only valid JSON. No markdown.",
+          temperature: 0.5,
+        });
+        const again = await waitForPrediction(retry.id, {
+          intervalMs: 1200,
+          maxMs: 60_000,
+        });
+        if (again.status !== "succeeded") {
+          throw new Error(
+            `Style guide generation failed: ${again.error ?? again.status}`
+          );
+        }
+        const outText =
+          typeof again.output === "string"
+            ? again.output
+            : Array.isArray(again.output)
+            ? again.output.join("")
+            : String(again.output ?? "");
+        parsed = StyleSchema.parse(JSON.parse(outText));
+      }
+
+      // Normalize hex values to #RRGGBB
+      const palette = parsed.palette.map((c) => ({
+        name: c.name,
+        hex: c.hex.startsWith("#") ? c.hex : `#${c.hex}`,
+      }));
+
+      const result: StyleGuide = { ...parsed, palette } as StyleGuide;
+      return { style: result };
     }),
 
   startImagePredictions: procedure

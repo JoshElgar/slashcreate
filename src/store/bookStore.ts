@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { StyleGuide } from "@/types/style";
 
 export type Spread = {
   id: string;
@@ -16,6 +17,7 @@ type BookState = {
   predictions: PredictionMap;
   isGenerating: boolean;
   hasGeneratedOnce: boolean;
+  styleGuide?: StyleGuide | null;
   setTopic: (topic: string) => void;
   reset: () => void;
   setSpreads: (spreads: Spread[]) => void;
@@ -30,6 +32,7 @@ type BookState = {
   ) => void;
   setGenerating: (value: boolean) => void;
   setHasGeneratedOnce: (value: boolean) => void;
+  setStyleGuide: (style: StyleGuide | null) => void;
 };
 
 export const useBookStore = create<BookState>((set, get) => ({
@@ -38,8 +41,9 @@ export const useBookStore = create<BookState>((set, get) => ({
   predictions: {},
   isGenerating: false,
   hasGeneratedOnce: false,
+  styleGuide: null,
   setTopic: (topic) => set({ topic }),
-  reset: () => set({ spreads: [], predictions: {} }),
+  reset: () => set({ spreads: [], predictions: {}, styleGuide: null }),
   setSpreads: (spreads) => set({ spreads }),
   upsertImage: (conceptId, imageUrl) =>
     set(({ spreads }) => ({
@@ -75,4 +79,5 @@ export const useBookStore = create<BookState>((set, get) => ({
     }),
   setGenerating: (value: boolean) => set({ isGenerating: value }),
   setHasGeneratedOnce: (value: boolean) => set({ hasGeneratedOnce: value }),
+  setStyleGuide: (style) => set({ styleGuide: style }),
 }));

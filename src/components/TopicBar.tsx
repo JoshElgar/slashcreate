@@ -19,6 +19,7 @@ export function TopicBar() {
   const [count] = useState(12);
   const [loading, setLoading] = useState(false);
   const generateConcepts = trpc.generation.generateConcepts.useMutation();
+  const generateStyle = trpc.generation.generateStyleGuide.useMutation();
   const startImages = trpc.generation.startImagePredictions.useMutation();
 
   const onGenerate = async () => {
@@ -37,10 +38,37 @@ export function TopicBar() {
       setSpreads(spreads);
       setHasGeneratedOnce(true);
 
-      const items = spreads.map((s) => ({
-        conceptId: s.id,
-        prompt: `High-quality editorial illustration about "${s.title}" related to topic "${topic}". Minimalist, clean, neutral colors, no text, no watermarks.`,
-      }));
+      let items;
+      try {
+        // Fetch a compact style guide once per topic
+        const styleRes = await generateStyle.mutateAsync({
+          topic,
+          conceptTitles: spreads.map((s) => s.title),
+        });
+        useBookStore.getState().setStyleGuide(styleRes.style);
+
+        const sg = styleRes.style;
+        const palette = (sg.palette || [])
+          .map((c) => c.hex)
+          .slice(0, 4)
+          .join(", ");
+        const influences = (sg.influences || []).slice(0, 3).join(", ");
+        const pos = (sg.keywords || []).slice(0, 8).join(", ");
+        const neg = (sg.negativeKeywords || ["text", "watermark", "logo"])
+          .slice(0, 10)
+          .join(", ");
+
+        items = spreads.map((s) => ({
+          conceptId: s.id,
+          prompt: `${s.title}. Style: ${sg.medium}, ${sg.lighting}, ${sg.composition}, palette ${palette}; influences ${influences}; ${pos}. No text, no watermarks. Negative: ${neg}.`,
+        }));
+      } catch (err) {
+        // Fallback to the previous simple prompt
+        items = spreads.map((s) => ({
+          conceptId: s.id,
+          prompt: `High-quality editorial illustration about "${s.title}" related to topic "${topic}". Minimalist, clean, neutral colors, no text, no watermarks.`,
+        }));
+      }
       const started = await startImages.mutateAsync({ items });
       setPredictions(started.started);
     } catch (e) {
