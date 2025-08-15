@@ -13,10 +13,14 @@ export function MusicToggle() {
     audio.preload = "auto";
     audioRef.current = audio;
 
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+    audio.addEventListener("play", handlePlay);
+    audio.addEventListener("pause", handlePause);
+
     const tryPlay = async () => {
       try {
         await audio.play();
-        setIsPlaying(true);
       } catch {
         setIsPlaying(false);
       }
@@ -25,8 +29,32 @@ export function MusicToggle() {
     tryPlay();
 
     return () => {
+      audio.removeEventListener("play", handlePlay);
+      audio.removeEventListener("pause", handlePause);
       audio.pause();
       audioRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    const kickstartIfTopicInput = (evt: Event) => {
+      const target = evt.target as Element | null;
+      if (!target) return;
+      if (target.matches('input[placeholder="enter a topic"]')) {
+        const audio = audioRef.current;
+        if (!audio) return;
+        if (audio.paused) {
+          audio.play().catch(() => {});
+        }
+      }
+    };
+
+    document.addEventListener("pointerdown", kickstartIfTopicInput, true);
+    document.addEventListener("focusin", kickstartIfTopicInput, true);
+
+    return () => {
+      document.removeEventListener("pointerdown", kickstartIfTopicInput, true);
+      document.removeEventListener("focusin", kickstartIfTopicInput, true);
     };
   }, []);
 
