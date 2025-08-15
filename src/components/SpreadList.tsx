@@ -108,7 +108,7 @@ function SpreadItem({
         style={{ aspectRatio: "9 / 16", height: "100%" }}
       >
         <div className="flex items-start justify-between mb-3">
-          <h3 className="text-sm font-semibold leading-tight pr-2">
+          <h3 className="text-xl font-semibold text-[#dadada] leading-tight pr-2">
             {spread.title}
           </h3>
           <button
