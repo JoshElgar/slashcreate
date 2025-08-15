@@ -6,6 +6,7 @@ import { Volume2, VolumeX } from "lucide-react";
 export function MusicToggle() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
+  const userMutedRef = useRef(false);
 
   useEffect(() => {
     const audio = new Audio("/music.mp4");
@@ -19,6 +20,7 @@ export function MusicToggle() {
     audio.addEventListener("pause", handlePause);
 
     const tryPlay = async () => {
+      if (userMutedRef.current) return;
       try {
         await audio.play();
       } catch {
@@ -43,7 +45,7 @@ export function MusicToggle() {
       if (target.matches('input[placeholder="enter a topic"]')) {
         const audio = audioRef.current;
         if (!audio) return;
-        if (audio.paused) {
+        if (audio.paused && !userMutedRef.current) {
           audio.play().catch(() => {});
         }
       }
@@ -64,10 +66,12 @@ export function MusicToggle() {
     if (isPlaying) {
       audio.pause();
       setIsPlaying(false);
+      userMutedRef.current = true;
     } else {
       try {
         await audio.play();
         setIsPlaying(true);
+        userMutedRef.current = false;
       } catch {
         setIsPlaying(false);
       }
