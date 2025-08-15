@@ -23,6 +23,7 @@ export function EmailBuyButton() {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [sending, setSending] = useState(false);
+  const [justSent, setJustSent] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const inputWrapRef = useRef<HTMLDivElement>(null);
 
@@ -71,11 +72,15 @@ export function EmailBuyButton() {
         body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error("Failed to send");
-      setOpen(false);
+      setJustSent(true);
+      await new Promise((r) => setTimeout(r, 1000));
+      setJustSent(false);
       setEmail("");
+      setOpen(false);
+      setSending(false);
+      return;
     } catch (e) {
       console.error(e);
-    } finally {
       setSending(false);
     }
   };
@@ -109,7 +114,9 @@ export function EmailBuyButton() {
             spellCheck={false}
             placeholder="email"
             disabled={disabled}
-            className="w-full h-10 bg-transparent text-[24px] leading-none text-[#dadada] placeholder:text-[#dadada] outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50"
+            className={`w-full h-10 bg-transparent text-[24px] leading-none ${
+              justSent ? "text-green-500" : "text-[#dadada]"
+            } placeholder:text-[#dadada] outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50`}
           />
           <span className="mt-1 text-[10px] text-[#7a7a7a]">
             hit enter to confirm
