@@ -398,11 +398,7 @@
   }
 }
 
-/* App-specific: shimmer keyframes for skeletons */
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
+/* (Removed shimmer styles) */
 
 /* Horizontal scrollbar styling for spreads row */
 .spreads-scroll {
