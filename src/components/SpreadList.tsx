@@ -164,7 +164,7 @@ function SpreadItem({
             <div className="text-neutral-400 text-xs">Generating image…</div>
           </div>
         )}
-        <div className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] text-black opacity-80">
+        <div className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] text-white opacity-80">
           {index * 2 + 2}
         </div>
       </Card>
