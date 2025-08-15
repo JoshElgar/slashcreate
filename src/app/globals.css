@@ -397,3 +397,24 @@
     @apply font-heading font-bold tracking-tight;
   }
 }
+
+/* App-specific: shimmer keyframes for skeletons */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Horizontal scrollbar styling for spreads row */
+.spreads-scroll {
+  scrollbar-color: #fafafa transparent; /* Firefox */
+}
+.spreads-scroll::-webkit-scrollbar {
+  height: 10px;
+}
+.spreads-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.spreads-scroll::-webkit-scrollbar-thumb {
+  background-color: #fafafa;
+  border-radius: 9999px;
+}
