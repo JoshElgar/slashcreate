@@ -52,21 +52,51 @@ export function TopicBar() {
           .map((c) => c.hex)
           .slice(0, 4)
           .join(", ");
-        const influences = (sg.influences || []).slice(0, 3).join(", ");
-        const pos = (sg.keywords || []).slice(0, 8).join(", ");
-        const neg = (sg.negativeKeywords || ["text", "watermark", "logo"])
-          .slice(0, 10)
+        const influences = (sg.influences || []).slice(0, 4).join(", ");
+        const pos = (sg.keywords || []).slice(0, 12).join(", ");
+        const neg = (
+          sg.negativeKeywords || [
+            "text",
+            "caption",
+            "subtitles",
+            "watermark",
+            "logo",
+            "signature",
+            "letters",
+            "words",
+            "typography",
+            "graphic design",
+            "poster",
+            "diagram",
+            "chart",
+            "meme",
+            "ui",
+            "interface",
+            "screenshot",
+            "map",
+            "sign",
+            "signage",
+            "flat vector",
+            "clip art",
+            "corporate illustration",
+          ]
+        )
+          .slice(0, 16)
           .join(", ");
 
         items = spreads.map((s) => ({
           conceptId: s.id,
-          prompt: `${s.title}. Style: ${sg.medium}, ${sg.lighting}, ${sg.composition}, palette ${palette}; influences ${influences}; ${pos}. No text, no watermarks. Negative: ${neg}.`,
+          prompt: `${s.title} — topic: ${topic}. Style: ${sg.medium}${
+            sg.camera ? ", " + sg.camera : ""
+          }, ${sg.lighting}, ${sg.composition}${
+            sg.texture ? ", " + sg.texture : ""
+          }, palette ${palette}; influences ${influences}; ${pos}. No text, no captions, no subtitles, no watermarks, no logos, no signatures. Negative: ${neg}.`,
         }));
       } catch (err) {
         // Fallback to the previous simple prompt
         items = spreads.map((s) => ({
           conceptId: s.id,
-          prompt: `High-quality editorial illustration about "${s.title}" related to topic "${topic}". Minimalist, clean, neutral colors, no text, no watermarks.`,
+          prompt: `High-quality illustration for "${s.title}" — topic: "${topic}". Cinematic, cohesive with the topic’s aesthetic. No text, no captions, no subtitles, no watermarks, no logos, no signatures.`,
         }));
       }
       const quality = useBookStore.getState().imageQuality;

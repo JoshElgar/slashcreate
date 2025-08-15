@@ -38,15 +38,7 @@ export function EmailBuyButton() {
     }
   }, [canShow]);
 
-  useEffect(() => {
-    if (!inputWrapRef.current) return;
-    animate(inputWrapRef.current, {
-      height: open ? [0, 48] : [48, 0],
-      opacity: open ? [0, 1] : [1, 0],
-      duration: 220,
-      easing: "easeOutQuad",
-    });
-  }, [open]);
+  // Removed height animation to avoid layout shift
 
   if (!canShow) return null;
 
@@ -96,7 +88,7 @@ export function EmailBuyButton() {
           request physical copy
         </button>
       ) : (
-        <div className="w-full flex flex-col">
+        <div ref={inputWrapRef} className="w-full flex flex-col">
           <input
             autoFocus
             value={email}

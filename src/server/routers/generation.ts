@@ -104,7 +104,9 @@ export const generationRouter = router({
         'You are an expert art director. Return strict JSON only. No prose. JSON shape: {"palette": {"hex": string}[], "lighting": string, "medium": string, "composition": string, "camera"?: string|null, "texture"?: string, "influences": string[], "keywords": string[], "negativeKeywords": string[], "aspect"?: string}';
 
       const titles = input.conceptTitles?.slice(0, 12).join("; ");
-      const userPrompt = `Topic: ${input.topic}. Create a very specific, unmistakably topic-driven visual style guide that a diffusion model can follow across many images.
+      const userPrompt = `Topic: ${
+        input.topic
+      }. Create a very specific, unmistakably topic-driven visual style guide that a diffusion model can follow across many images.
 Include signature visual cues from the topic (era, place, franchise, movement, materials, production design, motifs, weather, mood). If the topic implies a strong aesthetic (e.g., cyberpunk neon rain, noir lighting, retro-futurism), encode that explicitly.
 Provide:
 - palette (3-8 cohesive hex colors that match the topic)

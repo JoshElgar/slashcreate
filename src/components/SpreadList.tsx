@@ -43,24 +43,21 @@ export function SpreadList() {
   // When generating with no spreads yet, show a row of skeleton page pairs.
 
   return (
-    <div className="w-full h-full overflow-x-auto overflow-y-hidden spreads-scroll">
-      <div className="flex space-x-8">
+    <div className="w-full overflow-x-auto overflow-y-hidden spreads-scroll">
+      <div className="flex space-x-8 items-stretch">
         {isGenerating && spreads.length === 0
           ? Array.from({ length: 9 }).map((_, i) => (
               <div
                 key={`skeleton-${i}`}
-                className="flex space-x-2 w-auto"
-                style={{ height: "48vh" }}
+                className="flex space-x-2 w-auto h-auto"
               >
                 <div
-                  className="relative bg-panel border border-neutral-800 flex items-center justify-center"
-                  style={{ aspectRatio: "9 / 16", height: "100%" }}
+                  className="relative bg-panel border border-neutral-800 flex items-center justify-center aspect-[9/16] w-[32vw] max-w-[360px] md:w-56"
                 >
                   <div className="size-2.5 rounded-full bg-orange-500 animate-pulse" />
                 </div>
                 <div
-                  className="relative bg-panel border border-neutral-800 flex items-center justify-center"
-                  style={{ aspectRatio: "9 / 16", height: "100%" }}
+                  className="relative bg-panel border border-neutral-800 flex items-center justify-center aspect-[9/16] w-[32vw] max-w-[360px] md:w-56"
                 >
                   <div className="size-2.5 rounded-full bg-orange-500 animate-pulse" />
                 </div>
@@ -112,13 +109,11 @@ function SpreadItem({
   return (
     <div
       ref={ref}
-      className="group flex gap-2 w-auto"
-      style={{ height: "48vh" }}
+      className="group flex gap-2 w-auto h-auto"
     >
       {/* Left page - Text */}
       <Card
-        className="bg-panel border border-neutral-800 shadow-sm p-4 overflow-hidden flex flex-col w-auto relative"
-        style={{ aspectRatio: "9 / 16", height: "100%" }}
+        className="bg-panel border border-neutral-800 shadow-sm p-4 overflow-hidden flex flex-col w-auto relative aspect-[9/16] w-[32vw] max-w-[360px] md:w-56"
       >
         <div className="flex items-start justify-between mb-3">
           <h3 className="text-xl font-semibold text-app-fg leading-tight pr-2">
@@ -150,8 +145,7 @@ function SpreadItem({
 
       {/* Right page - Image */}
       <Card
-        className="bg-panel border border-neutral-800 shadow-sm overflow-hidden flex items-center justify-center w-auto relative"
-        style={{ aspectRatio: "9 / 16", height: "100%" }}
+        className="bg-panel border border-neutral-800 shadow-sm overflow-hidden flex items-center justify-center w-auto relative aspect-[9/16] w-[32vw] max-w-[360px] md:w-56"
       >
         {spread.status === "ready" && spread.imageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element

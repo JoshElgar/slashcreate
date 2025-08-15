@@ -435,3 +435,8 @@
   background-color: var(--color-soft-bg);
   border-radius: 9999px;
 }
+
+/* Reserve space for horizontal scrollbar to avoid layout shift */
+.spreads-scroll {
+  padding-bottom: 10px;
+}
