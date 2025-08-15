@@ -14,7 +14,7 @@ export default function Home() {
       <div className="col-start-2 col-span-3 row-start-3 row-span-4 min-h-0">
         <SpreadList />
       </div>
-      <div className="col-start-2 col-span-1 row-start-7 flex items-end">
+      <div className="col-start-2 col-span-1 row-start-7 flex">
         <EmailBuyButton />
       </div>
     </div>

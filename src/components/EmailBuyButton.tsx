@@ -85,10 +85,10 @@ export function EmailBuyButton() {
       {!open ? (
         <button
           disabled={disabled}
-          className="w-full h-10 inline-flex items-center justify-start rounded-md text-[#dadada] text-sm underline disabled:opacity-60"
+          className="h-10 inline-flex items-center justify-start rounded-md text-[#dadada] text-lg cursor-pointer underline disabled:opacity-60 hover:text-green-600"
           onClick={() => setOpen(true)}
         >
-          buy
+          request physical copy
         </button>
       ) : (
         <div className="w-full flex flex-col">
