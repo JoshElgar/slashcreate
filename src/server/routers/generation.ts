@@ -32,6 +32,10 @@ export const generationRouter = router({
       const userPrompt = `Topic: ${input.topic}. Generate ${input.count} diverse concepts that perfectly encapsulate the topic and highlight the most interesting aspects. It's important they paint a cohesive picture when all put together - there should be shared conceptual threads woven throughout. For each, return: title (<=7 words), paragraphs (array with 1 paragraph, 100 words max). Return only JSON: { concepts: { title: string, paragraphs: string[1] }[] }.`;
 
       // Minimal input contract for Replicate OpenAI GPT-5 runner
+      console.log(
+        "Creating concept generation prediction for topic:",
+        input.topic
+      );
       const prediction = await createPredictionForModel("openai/gpt-5-nano", {
         system_prompt: systemPrompt,
         prompt: userPrompt,
@@ -65,6 +69,7 @@ export const generationRouter = router({
         parsed = ConceptsSchema.parse(JSON.parse(text));
       } catch (err) {
         // Retry once with an explicit JSON reminder
+        console.log("Retrying concept generation with explicit JSON reminder");
         const retry = await createPredictionForModel("openai/gpt-5-nano", {
           prompt:
             userPrompt +
@@ -134,6 +139,10 @@ export const generationRouter = router({
         titles ?? "(not provided)"
       }. Keep wording compact and model-friendly.`;
 
+      console.log(
+        "Creating style guide generation prediction for topic:",
+        input.topic
+      );
       const prediction = await createPredictionForModel("openai/gpt-5-nano", {
         system_prompt: systemPrompt,
         prompt: userPrompt,
@@ -164,6 +173,9 @@ export const generationRouter = router({
       try {
         parsed = StyleSchema.parse(JSON.parse(text));
       } catch (err) {
+        console.log(
+          "Retrying style guide generation with explicit JSON reminder"
+        );
         const retry = await createPredictionForModel("openai/gpt-5-nano", {
           system_prompt: systemPrompt,
           prompt: userPrompt + "\nReturn only valid JSON. No markdown.",
@@ -212,6 +224,7 @@ export const generationRouter = router({
       const started: { conceptId: string; predictionId: string }[] = [];
       for (const item of input.items) {
         const composedPrompt = `${item.prompt}. no text`;
+        console.log("Creating image prediction for concept:", item.conceptId);
         const p = await createPredictionForModel(
           "black-forest-labs/flux-schnell",
           {
