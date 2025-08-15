@@ -39,7 +39,6 @@ export const generationRouter = router({
       const prediction = await createPredictionForModel("openai/gpt-5", {
         system_prompt: systemPrompt,
         prompt: userPrompt,
-        temperature: 0.7,
       });
 
       const completed = await waitForPrediction(prediction.id, {
@@ -130,7 +129,6 @@ Return only the JSON.`;
       const prediction = await createPredictionForModel("openai/gpt-5", {
         system_prompt: systemPrompt,
         prompt: userPrompt,
-        temperature: 0.6,
       });
 
       const completed = await waitForPrediction(prediction.id, {
