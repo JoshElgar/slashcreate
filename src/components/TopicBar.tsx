@@ -127,6 +127,7 @@ export function TopicBar() {
           }}
           placeholder="enter a topic"
           disabled={isGenerating}
+          spellCheck={false}
           className="w-full bg-transparent text-[48px] leading-none text-app-fg placeholder:text-app-fg outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50"
         />
         <p className="mt-3 text-sm text-soft-fg">
