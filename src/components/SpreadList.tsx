@@ -49,21 +49,23 @@ export function SpreadList() {
           ? Array.from({ length: 9 }).map((_, i) => (
               <div
                 key={`skeleton-${i}`}
-                className="flex gap-2 w-auto"
-                style={{ height: "48vh" }}
+                className="group w-auto h-[48vh] flex flex-col items-center"
               >
-                <div
-                  className="bg-[#2a2a2a] border border-neutral-800 grid place-items-center"
-                  style={{ aspectRatio: "9 / 16", height: "100%" }}
-                >
-                  <div className="size-2 rounded-full bg-orange-500 animate-pulse" />
+                <div className="flex-1 min-h-0 flex gap-2 items-stretch">
+                  <div
+                    className="bg-[#2a2a2a] border border-neutral-800 grid place-items-center h-full w-auto"
+                    style={{ aspectRatio: "9 / 16" }}
+                  >
+                    <div className="size-2 rounded-full bg-orange-500 animate-pulse" />
+                  </div>
+                  <div
+                    className="bg-[#2a2a2a] border border-neutral-800 grid place-items-center h-full w-auto"
+                    style={{ aspectRatio: "9 / 16" }}
+                  >
+                    <div className="size-2 rounded-full bg-orange-500 animate-pulse" />
+                  </div>
                 </div>
-                <div
-                  className="bg-[#2a2a2a] border border-neutral-800 grid place-items-center"
-                  style={{ aspectRatio: "9 / 16", height: "100%" }}
-                >
-                  <div className="size-2 rounded-full bg-orange-500 animate-pulse" />
-                </div>
+                <div className="h-6 flex items-center justify-center" />
               </div>
             ))
           : spreads.map((spread) => (
@@ -105,12 +107,8 @@ function SpreadItem({
   }, []);
 
   return (
-    <div
-      ref={ref}
-      className="group flex flex-col items-center w-auto"
-      style={{ height: "48vh" }}
-    >
-      <div className="flex gap-2 w-auto">
+    <div ref={ref} className="group w-auto h-[48vh] flex flex-col items-center">
+      <div className="flex-1 min-h-0 flex gap-2 items-stretch">
         {/* Left page - Text */}
         <Card
           className="bg-[#2a2a2a] border border-neutral-800 shadow-sm p-4 overflow-hidden flex flex-col w-auto"
@@ -164,16 +162,16 @@ function SpreadItem({
             </div>
           )}
         </Card>
-        {/* Hover-only delete below the spread */}
-        <div className="w-full flex justify-center">
-          <button
-            onClick={onDelete}
-            className="mt-2 hidden group-hover:flex items-center justify-center px-2 py-1 text-xs rounded border border-neutral-700 text-[#dadada] hover:bg-neutral-800"
-            aria-label="Delete spread"
-          >
-            Remove
-          </button>
-        </div>
+      </div>
+      {/* Hover-only delete below the spread */}
+      <div className="h-6 flex items-center justify-center">
+        <button
+          onClick={onDelete}
+          className="hidden group-hover:flex items-center justify-center px-2 py-1 text-xs rounded border border-neutral-700 text-[#dadada] hover:bg-neutral-800"
+          aria-label="Delete spread"
+        >
+          Remove
+        </button>
       </div>
     </div>
   );
