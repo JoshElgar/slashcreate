@@ -131,7 +131,7 @@ export function TopicBar() {
           className="w-full bg-transparent text-[48px] leading-none text-app-fg placeholder:text-app-fg outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50"
         />
         <p className="mt-3 text-sm text-soft-fg">
-          this will be the basis for your book
+          this is the basis for your book
         </p>
       </div>
     </div>
