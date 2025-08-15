@@ -207,7 +207,9 @@ export const generationRouter = router({
             const first = p.output[0] as unknown;
             if (typeof first === "string") url = first;
             else if (
-              first && typeof first === "object" && "url" in (first as any)
+              first &&
+              typeof first === "object" &&
+              "url" in (first as any)
             )
               url = String((first as any).url);
           } else if (typeof p.output === "string") {
