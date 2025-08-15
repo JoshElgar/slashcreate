@@ -95,7 +95,6 @@ function SpreadItem({
     if (!ref.current) return;
     animate(ref.current, {
       opacity: [0, 1],
-      translateY: [8, 0],
       duration: 400,
       ease: "out(3)",
     });

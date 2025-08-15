@@ -31,7 +31,6 @@ export function EmailBuyButton() {
     if (canShow && containerRef.current) {
       animate(containerRef.current, {
         opacity: [0, 1],
-        translateY: [8, 0],
         duration: 350,
         ease: "out(3)",
       });
