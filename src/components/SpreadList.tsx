@@ -53,13 +53,17 @@ export function SpreadList() {
                 style={{ height: "48vh" }}
               >
                 <div
-                  className="bg-[#2a2a2a] border border-neutral-800"
+                  className="relative bg-[#2a2a2a] border border-neutral-800 flex items-center justify-center"
                   style={{ aspectRatio: "9 / 16", height: "100%" }}
-                />
+                >
+                  <div className="size-2.5 rounded-full bg-orange-500 animate-pulse" />
+                </div>
                 <div
-                  className="bg-[#2a2a2a] border border-neutral-800"
+                  className="relative bg-[#2a2a2a] border border-neutral-800 flex items-center justify-center"
                   style={{ aspectRatio: "9 / 16", height: "100%" }}
-                />
+                >
+                  <div className="size-2.5 rounded-full bg-orange-500 animate-pulse" />
+                </div>
               </div>
             ))
           : spreads.map((spread) => (
@@ -128,18 +132,7 @@ function SpreadItem({
                 </p>
               ))}
             </>
-          ) : (
-            <div className="space-y-2">
-              <div className="h-3 rounded bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 bg-no-repeat bg-[length:200%_100%] [animation:shimmer_1.6s_linear_infinite]" />
-              <div className="h-3 rounded w-5/6 bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 bg-no-repeat bg-[length:200%_100%] [animation:shimmer_1.6s_linear_infinite]" />
-              <div className="h-3 rounded w-4/5 bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 bg-no-repeat bg-[length:200%_100%] [animation:shimmer_1.6s_linear_infinite]" />
-              <div className="h-3 rounded w-3/4 bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 bg-no-repeat bg-[length:200%_100%] [animation:shimmer_1.6s_linear_infinite]" />
-              <div className="h-3 rounded mt-3 bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 bg-no-repeat bg-[length:200%_100%] [animation:shimmer_1.6s_linear_infinite]" />
-              <div className="h-3 rounded w-5/6 bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 bg-no-repeat bg-[length:200%_100%] [animation:shimmer_1.6s_linear_infinite]" />
-              <div className="h-3 rounded w-4/5 bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 bg-no-repeat bg-[length:200%_100%] [animation:shimmer_1.6s_linear_infinite]" />
-              <div className="h-3 rounded w-2/3 bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 bg-no-repeat bg-[length:200%_100%] [animation:shimmer_1.6s_linear_infinite]" />
-            </div>
-          )}
+          ) : null}
         </div>
       </Card>
 
