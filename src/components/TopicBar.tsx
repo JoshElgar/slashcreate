@@ -1,20 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useBookStore } from "@/store/bookStore";
 import { trpc } from "@/lib/trpc";
-
-const PLACEHOLDER_TERMS = [
-  "the solar system",
-  "dinosaurs",
-  "the rainforest",
-  "ancient Egypt",
-  "ocean life",
-  "robots",
-  "music history",
-  "butterflies",
-];
 
 export function TopicBar() {
   const {
@@ -33,50 +22,11 @@ export function TopicBar() {
   const generateStyle = trpc.generation.generateStyleGuide.useMutation();
   const startImages = trpc.generation.startImagePredictions.useMutation();
 
-  const [placeholder, setPlaceholder] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [termIndex, setTermIndex] = useState(0);
-
-  // Typing effect for placeholder when input is empty
-  useEffect(() => {
-    if (topic) return;
-
-    const currentTerm = PLACEHOLDER_TERMS[termIndex];
-
-    const handleTyping = () => {
-      if (!isDeleting) {
-        if (placeholder.length < currentTerm.length) {
-          setPlaceholder(currentTerm.substring(0, placeholder.length + 1));
-        } else {
-          setTimeout(() => setIsDeleting(true), 1500);
-        }
-      } else {
-        if (placeholder.length > 0) {
-          setPlaceholder(placeholder.substring(0, placeholder.length - 1));
-        } else {
-          setIsDeleting(false);
-          setTermIndex((prev) => (prev + 1) % PLACEHOLDER_TERMS.length);
-        }
-      }
-    };
-
-    const typingSpeed = isDeleting ? 24 : 40;
-    const timeout = setTimeout(handleTyping, typingSpeed);
-
-    return () => clearTimeout(timeout);
-  }, [topic, placeholder, isDeleting, termIndex]);
-
   const onGenerate = async () => {
     if (!topic || loading) return;
     setLoading(true);
     setGenerating(true);
     reset();
-    try {
-      // Notify other parts of the app that a topic has been submitted
-      window.dispatchEvent(
-        new CustomEvent("topic-submitted", { detail: { topic } })
-      );
-    } catch {}
     try {
       const res = await generateConcepts.mutateAsync({ topic, count });
       const spreads = res.concepts.map((c, idx) => ({
@@ -167,7 +117,6 @@ export function TopicBar() {
   return (
     <div className="w-full">
       <div className="mx-auto py-4">
-        <p className="mb-3 text-sm text-soft-fg">create a book about</p>
         <input
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
@@ -176,11 +125,14 @@ export function TopicBar() {
               onGenerate();
             }
           }}
-          placeholder={placeholder || "enter a topic"}
+          placeholder="enter a topic"
           disabled={isGenerating}
           spellCheck={false}
           className="w-full bg-transparent text-[48px] leading-none text-app-fg placeholder:text-app-fg outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50"
         />
+        <p className="mt-3 text-sm text-soft-fg">
+          this is the basis for your book
+        </p>
       </div>
     </div>
   );
