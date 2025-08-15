@@ -104,11 +104,21 @@ export const generationRouter = router({
         'You are an expert art director. Return strict JSON only. No prose. JSON shape: {"palette": {"hex": string}[], "lighting": string, "medium": string, "composition": string, "camera"?: string|null, "texture"?: string, "influences": string[], "keywords": string[], "negativeKeywords": string[], "aspect"?: string}';
 
       const titles = input.conceptTitles?.slice(0, 12).join("; ");
-      const userPrompt = `Topic: ${
-        input.topic
-      }. Create a concise, cohesive visual style guide that will produce elegant, high-quality images across multiple related concepts. If useful, consider these concept titles: ${
-        titles ?? "(not provided)"
-      }. Keep wording compact and model-friendly.`;
+      const userPrompt = `Topic: ${input.topic}. Create a very specific, unmistakably topic-driven visual style guide that a diffusion model can follow across many images.
+Include signature visual cues from the topic (era, place, franchise, movement, materials, production design, motifs, weather, mood). If the topic implies a strong aesthetic (e.g., cyberpunk neon rain, noir lighting, retro-futurism), encode that explicitly.
+Provide:
+- palette (3-8 cohesive hex colors that match the topic)
+- lighting (concise, cinematic/photographic lighting description)
+- medium (e.g., cinematic key art, stylized concept art, analog film photo, matte painting)
+- composition (framing rules and shot style)
+- camera (optional lenses/sensors/film if relevant)
+- texture (optional surface/material/film grain)
+- influences (2-6 highly relevant artists/DPs/studios/movements tied to the topic)
+- keywords (8-16 short, concrete, model-friendly tags that enforce the topic aesthetic)
+- negativeKeywords (12-20 strong blockers for any text or bland/generic looks; include: text, caption, subtitles, watermark, logo, signature, letters, words, typography, graphic design, poster, diagram, chart, meme, UI, interface, screenshot, map, sign, signage, flat vector, clip art, corporate illustration)
+Aspect may be set if relevant.
+Consider these concept titles: ${titles ?? "(not provided)"}.
+Return only the JSON.`;
 
       console.log(
         "Creating style guide generation prediction for topic:",
@@ -166,17 +176,27 @@ export const generationRouter = router({
     )
     .mutation(async ({ input }) => {
       const started: { conceptId: string; predictionId: string }[] = [];
+      const strongNoText =
+        "no text, no caption, no subtitles, no watermark, no logo, no signature, no letters, no words, no typography, no UI, no interface, no signs, no signage";
+      const strongNegative =
+        "text, caption, subtitles, watermark, logo, signature, letters, words, typography, graphic design, poster, diagram, chart, meme, ui, interface, screenshot, map, sign, signage, flat vector, clip art, corporate illustration";
+
       for (const item of input.items) {
-        const composedPrompt = `${item.prompt}. no text`;
+        const composedPrompt = `${item.prompt}. ${strongNoText}`;
         console.log("Creating image prediction for concept:", item.conceptId);
         const model =
           input.quality === "high"
             ? "google/imagen-4-fast"
             : "black-forest-labs/flux-schnell";
-        const p = await createPredictionForModel(model, {
+        const inputPayload: Record<string, unknown> = {
           prompt: composedPrompt,
           aspect_ratio: "9:16",
-        });
+        };
+        // Provide model-specific negative prompts where supported
+        if (model === "black-forest-labs/flux-schnell") {
+          (inputPayload as any).negative_prompt = strongNegative;
+        }
+        const p = await createPredictionForModel(model, inputPayload);
         started.push({ conceptId: item.conceptId, predictionId: p.id });
       }
       return { started };
