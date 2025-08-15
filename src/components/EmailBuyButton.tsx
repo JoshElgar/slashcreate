@@ -106,14 +106,14 @@ export function EmailBuyButton() {
             autoCapitalize="none"
             inputMode="email"
             spellCheck={false}
-            placeholder="email"
+            placeholder="enter your email"
             disabled={disabled}
             className={`w-full h-10 bg-transparent text-[18px] leading-none ${
               justSent ? "text-green-500" : "text-[#dadada]"
             } placeholder:text-[#dadada] outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50`}
           />
           <span className="mt-1 text-[10px] text-[#7a7a7a]">
-            hit enter to confirm
+            we will email you with more details
           </span>
         </div>
       )}
