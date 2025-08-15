@@ -6,6 +6,7 @@ import {
   waitForPrediction,
 } from "../replicate";
 import { StyleGuide } from "@/types/style";
+import { parseFirstJson } from "../../utils/json";
 
 const ConceptsSchema = z.object({
   concepts: z
@@ -65,7 +66,7 @@ export const generationRouter = router({
         text = String(completed.output);
       }
 
-      const parsed = ConceptsSchema.parse(JSON.parse(text));
+      const parsed = ConceptsSchema.parse(parseFirstJson(text));
 
       return {
         concepts: parsed.concepts,
@@ -156,7 +157,7 @@ Return only the JSON.`;
           ? completed.output.join("")
           : String(completed.output ?? "");
 
-      const parsed = StyleSchema.parse(JSON.parse(text));
+      const parsed = StyleSchema.parse(parseFirstJson(text));
 
       // Normalize hex values to #RRGGBB
       const palette = parsed.palette.map((c) => ({
