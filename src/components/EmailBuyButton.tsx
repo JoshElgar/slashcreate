@@ -79,16 +79,18 @@ export function EmailBuyButton() {
   return (
     <div ref={containerRef} className="w-full">
       {!open ? (
-        <>
+        <div className="w-full flex flex-col">
           <button
             disabled={disabled}
-            className="h-10 mt-4 inline-flex items-center justify-start rounded-md text-[#dadada] text-[18px] underline-offset-6 cursor-pointer underline disabled:opacity-60 hover:text-green-600"
+            className="h-6 mt-4 inline-flex items-center justify-start rounded-md text-[#dadada] text-[24px] underline-offset-6 cursor-pointer underline disabled:opacity-60 hover:text-green-600"
             onClick={() => setOpen(true)}
           >
             buy
           </button>
-          <p className="text-sm text-soft-fg">request physical copy</p>
-        </>
+          <span className="mt-1 text-sm text-soft-fg">
+            we will email you with details
+          </span>
+        </div>
       ) : (
         <div ref={inputWrapRef} className="w-full flex flex-col">
           <input
@@ -108,7 +110,7 @@ export function EmailBuyButton() {
             spellCheck={false}
             placeholder="enter your email"
             disabled={disabled}
-            className={`w-full h-10 bg-transparent text-[18px] leading-none ${
+            className={`w-full h-6 mt-4 bg-transparent text-[24px] leading-none ${
               justSent ? "text-green-500" : "text-[#dadada]"
             } placeholder:text-[#dadada] outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50`}
           />
