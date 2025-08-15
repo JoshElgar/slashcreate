@@ -47,14 +47,11 @@ export function SpreadList() {
       <div className="flex space-x-8 items-stretch">
         {isGenerating && spreads.length === 0
           ? Array.from({ length: 9 }).map((_, i) => (
-              <div
-                key={`skeleton-${i}`}
-                className="flex space-x-2 w-auto h-auto"
-              >
-                <div className="relative bg-panel border border-neutral-800 flex items-center justify-center aspect-[9/16] w-[32vw] max-w-[460px] md:w-56">
+              <div key={`skeleton-${i}`} className="flex space-x-2 h-auto">
+                <div className="relative bg-panel border border-neutral-800 flex items-center justify-center aspect-[9/16] w-[clamp(320px,36vw,560px)]">
                   <div className="size-2.5 rounded-full bg-orange-500 animate-pulse" />
                 </div>
-                <div className="relative bg-panel border border-neutral-800 flex items-center justify-center aspect-[9/16] w-[32vw] max-w-[460px] md:w-56">
+                <div className="relative bg-panel border border-neutral-800 flex items-center justify-center aspect-[9/16] w-[clamp(320px,36vw,560px)]">
                   <div className="size-2.5 rounded-full bg-orange-500 animate-pulse" />
                 </div>
               </div>
@@ -103,9 +100,9 @@ function SpreadItem({
   }, []);
 
   return (
-    <div ref={ref} className="group flex gap-2 w-auto h-auto">
+    <div ref={ref} className="group flex gap-2 h-auto">
       {/* Left page - Text */}
-      <Card className="bg-panel border border-neutral-800 shadow-sm p-4 overflow-hidden flex flex-col relative aspect-[9/16] w-[32vw] max-w-[360px] md:w-56">
+      <Card className="bg-panel border border-neutral-800 shadow-sm p-4 overflow-hidden flex flex-col relative aspect-[9/16] w-[clamp(320px,36vw,560px)]">
         <div className="flex items-start justify-between mb-3">
           <h3 className="text-xl font-semibold text-app-fg leading-tight pr-2">
             {spread.title}
@@ -135,7 +132,7 @@ function SpreadItem({
       </Card>
 
       {/* Right page - Image */}
-      <Card className="bg-panel border border-neutral-800 shadow-sm overflow-hidden flex items-center justify-center relative aspect-[9/16] w-[32vw] max-w-[360px] md:w-56">
+      <Card className="bg-panel border border-neutral-800 shadow-sm overflow-hidden flex items-center justify-center relative aspect-[9/16] w-[clamp(320px,36vw,560px)]">
         {spread.status === "ready" && spread.imageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
