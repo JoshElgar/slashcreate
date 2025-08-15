@@ -38,28 +38,36 @@ export function SpreadList() {
   }, [predictions, checkImages, upsertImage, markFailed, updatePending]);
 
   // Now a horizontally scrollable row spanning 3 columns in a larger 5x8 grid layout.
+  const { isGenerating } = useBookStore();
 
-  if (spreads.length === 0) {
-    return (
-      <div className="flex-1 grid place-items-center text-neutral-400">
-        <div className="text-center">
-          <p className="text-sm">
-            Enter a topic above to generate your book spreads.
-          </p>
-        </div>
-      </div>
-    );
-  }
+  // When generating with no spreads yet, show a row of skeleton page pairs.
 
   return (
     <div className="w-full h-full overflow-x-auto overflow-y-hidden">
       <div className="flex gap-8">
-        {spreads.map((spread) => (
-          <SpreadItem
-            key={spread.id}
-            {...{ spread, onDelete: () => deleteSpread(spread.id) }}
-          />
-        ))}
+        {isGenerating && spreads.length === 0
+          ? Array.from({ length: 9 }).map((_, i) => (
+              <div
+                key={`skeleton-${i}`}
+                className="flex gap-2 w-auto"
+                style={{ height: "48vh" }}
+              >
+                <div
+                  className="bg-[#2a2a2a] border border-neutral-800"
+                  style={{ aspectRatio: "9 / 16", height: "100%" }}
+                />
+                <div
+                  className="bg-[#2a2a2a] border border-neutral-800"
+                  style={{ aspectRatio: "9 / 16", height: "100%" }}
+                />
+              </div>
+            ))
+          : spreads.map((spread) => (
+              <SpreadItem
+                key={spread.id}
+                {...{ spread, onDelete: () => deleteSpread(spread.id) }}
+              />
+            ))}
       </div>
     </div>
   );
