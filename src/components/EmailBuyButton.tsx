@@ -81,22 +81,19 @@ export function EmailBuyButton() {
   };
 
   return (
-    <div ref={containerRef} className="w-full flex justify-center py-2">
-      <div className="w-full max-w-xl">
+    <div ref={containerRef} className="w-full">
+      {!open ? (
         <button
           disabled={disabled}
-          className="w-full h-10 inline-flex items-center justify-center rounded-md bg-white text-black text-sm font-medium disabled:opacity-60"
-          onClick={() => setOpen((v) => !v)}
+          className="w-full h-10 inline-flex items-center justify-start rounded-md text-[#dadada] text-sm underline disabled:opacity-60"
+          onClick={() => setOpen(true)}
         >
-          {open ? (sending ? "Sending…" : "Confirm Email") : "Buy"}
+          buy
         </button>
-
-        <div
-          ref={inputWrapRef}
-          className="overflow-hidden"
-          style={{ height: open ? 48 : 0 }}
-        >
+      ) : (
+        <div className="w-full h-10 flex items-center">
           <input
+            autoFocus
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onKeyDown={(e) => {
@@ -106,13 +103,10 @@ export function EmailBuyButton() {
             }}
             placeholder="ENTER YOUR EMAIL"
             disabled={disabled}
-            className="mt-2 w-full bg-transparent text-[24px] leading-none text-[#dadada] placeholder:text-[#dadada] outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50"
+            className="w-full bg-transparent text-[24px] leading-none text-[#dadada] placeholder:text-[#dadada] outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50"
           />
-          <p className="mt-2 text-xs text-[#7a7a7a]">
-            Press Enter to send your book details to us.
-          </p>
         </div>
-      </div>
+      )}
     </div>
   );
 }
