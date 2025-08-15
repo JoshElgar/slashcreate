@@ -176,9 +176,9 @@ export function TopicBar() {
           placeholder={placeholder}
           disabled={isGenerating}
           spellCheck={false}
-          className="w-full bg-transparent text-[48px] leading-none text-app-fg placeholder:text-app-fg outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50"
+          className="w-full bg-transparent text-[24px] md:text-[48px] leading-none text-app-fg placeholder:text-app-fg outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50"
         />
-        <p className="mt-3 text-sm text-soft-fg">enter a topic</p>
+        <p className="md:mt-3 text-sm text-soft-fg">enter a topic</p>
       </div>
     </div>
   );
