@@ -36,8 +36,8 @@ export async function POST(req: NextRequest) {
 
     const { data, error } = await resend.emails.send({
       from: process.env.RESEND_FROM || "Orders <orders@yourdomain.com>",
-      to: [process.env.ORDERS_TO_EMAIL || "you@example.com"],
-      subject: `New book request: ${topic}`,
+      to: ["joshelgar@gmail.com"],
+      subject: `New book request from ${email}: ${topic}`,
       text: plain,
       reply_to: email,
     } as any);
