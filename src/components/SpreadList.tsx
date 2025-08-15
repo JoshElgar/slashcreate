@@ -43,8 +43,8 @@ export function SpreadList() {
   // When generating with no spreads yet, show a row of skeleton page pairs.
 
   return (
-    <div className="w-full h-full overflow-x-auto overflow-y-hidden">
-      <div className="flex gap-8">
+    <div className="w-full h-full overflow-x-auto overflow-y-hidden spreads-scroll">
+      <div className="flex gap-8 px-1">
         {isGenerating && spreads.length === 0
           ? Array.from({ length: 9 }).map((_, i) => (
               <div
@@ -119,7 +119,7 @@ function SpreadItem({
             <X className="size-3" />
           </button>
         </div>
-        <div className="text-xs leading-relaxed text-neutral-800 overflow-hidden relative flex-1">
+        <div className="text-xs leading-relaxed text-[#dadada] overflow-hidden relative flex-1">
           {spread.paragraphs.length > 0 ? (
             <>
               {spread.paragraphs.map((p, i) => (
@@ -130,14 +130,14 @@ function SpreadItem({
             </>
           ) : (
             <div className="space-y-2">
-              <div className="h-3 bg-neutral-200 rounded animate-pulse" />
-              <div className="h-3 bg-neutral-200 rounded animate-pulse w-5/6" />
-              <div className="h-3 bg-neutral-200 rounded animate-pulse w-4/5" />
-              <div className="h-3 bg-neutral-200 rounded animate-pulse w-3/4" />
-              <div className="h-3 bg-neutral-200 rounded animate-pulse mt-3" />
-              <div className="h-3 bg-neutral-200 rounded animate-pulse w-5/6" />
-              <div className="h-3 bg-neutral-200 rounded animate-pulse w-4/5" />
-              <div className="h-3 bg-neutral-200 rounded animate-pulse w-2/3" />
+              <div className="h-3 rounded bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 bg-no-repeat bg-[length:200%_100%] [animation:shimmer_1.6s_linear_infinite]" />
+              <div className="h-3 rounded w-5/6 bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 bg-no-repeat bg-[length:200%_100%] [animation:shimmer_1.6s_linear_infinite]" />
+              <div className="h-3 rounded w-4/5 bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 bg-no-repeat bg-[length:200%_100%] [animation:shimmer_1.6s_linear_infinite]" />
+              <div className="h-3 rounded w-3/4 bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 bg-no-repeat bg-[length:200%_100%] [animation:shimmer_1.6s_linear_infinite]" />
+              <div className="h-3 rounded mt-3 bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 bg-no-repeat bg-[length:200%_100%] [animation:shimmer_1.6s_linear_infinite]" />
+              <div className="h-3 rounded w-5/6 bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 bg-no-repeat bg-[length:200%_100%] [animation:shimmer_1.6s_linear_infinite]" />
+              <div className="h-3 rounded w-4/5 bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 bg-no-repeat bg-[length:200%_100%] [animation:shimmer_1.6s_linear_infinite]" />
+              <div className="h-3 rounded w-2/3 bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 bg-no-repeat bg-[length:200%_100%] [animation:shimmer_1.6s_linear_infinite]" />
             </div>
           )}
         </div>
