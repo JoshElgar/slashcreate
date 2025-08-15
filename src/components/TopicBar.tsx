@@ -64,9 +64,9 @@ export function TopicBar() {
           }}
           placeholder="ENTER A TOPIC"
           disabled={isGenerating}
-          className="w-full bg-transparent text-[48px] leading-none text-[#dadada] placeholder:text-[#dadada] outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50"
+          className="w-full bg-transparent text-[48px] leading-none text-app-fg placeholder:text-app-fg outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50"
         />
-        <p className="mt-3 text-sm text-[#7a7a7a]">
+        <p className="mt-3 text-sm text-soft-fg">
           Enter a topic above to generate your book.
         </p>
       </div>

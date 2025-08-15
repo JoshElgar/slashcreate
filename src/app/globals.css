@@ -288,6 +288,13 @@
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
 
+  /* App custom colors */
+  --color-app-bg: hsl(var(--app-bg));
+  --color-app-fg: hsl(var(--app-fg));
+  --color-panel: hsl(var(--panel));
+  --color-soft-fg: hsl(var(--soft-fg));
+  --color-soft-bg: hsl(var(--soft-bg));
+
   /* Optional chart colors if referenced */
   --color-chart-1: hsl(var(--chart-1));
   --color-chart-2: hsl(var(--chart-2));
@@ -342,6 +349,13 @@
     --chart-4: 43 74% 66%;
 
     --chart-5: 27 87% 67%;
+
+    /* App custom colors (hex mapped to HSL) */
+    --app-bg: 0 0% 10.2%; /* #1a1a1a */
+    --app-fg: 0 0% 85.5%; /* #dadada */
+    --panel: 0 0% 16.5%; /* #2a2a2a */
+    --soft-fg: 0 0% 47.8%; /* #7a7a7a */
+    --soft-bg: 0 0% 98%; /* #fafafa */
   }
 
   .dark {
@@ -377,6 +391,13 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+
+    /* App custom colors in dark mode */
+    --app-bg: 0 0% 10.2%;
+    --app-fg: 0 0% 85.5%;
+    --panel: 0 0% 16.5%;
+    --soft-fg: 0 0% 47.8%;
+    --soft-bg: 0 0% 98%;
   }
 }
 
@@ -402,7 +423,7 @@
 
 /* Horizontal scrollbar styling for spreads row */
 .spreads-scroll {
-  scrollbar-color: #fafafa transparent; /* Firefox */
+  scrollbar-color: var(--color-soft-bg) transparent; /* Firefox */
 }
 .spreads-scroll::-webkit-scrollbar {
   height: 10px;
@@ -411,6 +432,6 @@
   background: transparent;
 }
 .spreads-scroll::-webkit-scrollbar-thumb {
-  background-color: #fafafa;
+  background-color: var(--color-soft-bg);
   border-radius: 9999px;
 }

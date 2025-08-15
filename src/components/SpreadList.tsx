@@ -53,13 +53,13 @@ export function SpreadList() {
                 style={{ height: "48vh" }}
               >
                 <div
-                  className="relative bg-[#2a2a2a] border border-neutral-800 flex items-center justify-center"
+                  className="relative bg-panel border border-neutral-800 flex items-center justify-center"
                   style={{ aspectRatio: "9 / 16", height: "100%" }}
                 >
                   <div className="size-2.5 rounded-full bg-orange-500 animate-pulse" />
                 </div>
                 <div
-                  className="relative bg-[#2a2a2a] border border-neutral-800 flex items-center justify-center"
+                  className="relative bg-panel border border-neutral-800 flex items-center justify-center"
                   style={{ aspectRatio: "9 / 16", height: "100%" }}
                 >
                   <div className="size-2.5 rounded-full bg-orange-500 animate-pulse" />
@@ -118,22 +118,22 @@ function SpreadItem({
     >
       {/* Left page - Text */}
       <Card
-        className="bg-[#2a2a2a] border border-neutral-800 shadow-sm p-4 overflow-hidden flex flex-col w-auto relative"
+        className="bg-panel border border-neutral-800 shadow-sm p-4 overflow-hidden flex flex-col w-auto relative"
         style={{ aspectRatio: "9 / 16", height: "100%" }}
       >
         <div className="flex items-start justify-between mb-3">
-          <h3 className="text-xl font-semibold text-[#dadada] leading-tight pr-2">
+          <h3 className="text-xl font-semibold text-app-fg leading-tight pr-2">
             {spread.title}
           </h3>
           <button
             onClick={onDelete}
-            className="inline-flex items-center justify-center size-4 rounded border border-neutral-300 bg-[#dadada] text-neutral-600 hover:cursor-pointer shrink-0 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity"
+            className="inline-flex items-center justify-center size-4 rounded border border-neutral-300 bg-app-fg text-neutral-600 hover:cursor-pointer shrink-0 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity"
             aria-label="Delete spread"
           >
             <X className="size-3" />
           </button>
         </div>
-        <div className="text-xs leading-relaxed text-[#dadada] overflow-hidden relative flex-1">
+        <div className="text-xs leading-relaxed text-app-fg overflow-hidden relative flex-1">
           {spread.paragraphs.length > 0 ? (
             <>
               {spread.paragraphs.map((p, i) => (
@@ -151,7 +151,7 @@ function SpreadItem({
 
       {/* Right page - Image */}
       <Card
-        className="bg-[#2a2a2a] border border-neutral-800 shadow-sm overflow-hidden flex items-center justify-center w-auto relative"
+        className="bg-panel border border-neutral-800 shadow-sm overflow-hidden flex items-center justify-center w-auto relative"
         style={{ aspectRatio: "9 / 16", height: "100%" }}
       >
         {spread.status === "ready" && spread.imageUrl ? (
