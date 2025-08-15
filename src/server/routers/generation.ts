@@ -108,14 +108,31 @@ export const generationRouter = router({
     .mutation(async ({ input }) => {
       const started: { conceptId: string; predictionId: string }[] = [];
       for (const item of input.items) {
-        const p = await createPredictionForModel(
-          "black-forest-labs/flux-schnell",
-          {
-            prompt: item.prompt,
-            aspect_ratio: "9:16",
-          }
-        );
-        started.push({ conceptId: item.conceptId, predictionId: p.id });
+        const noTextSuffix =
+          "no text, no letters, no words, no numbers, no captions, no subtitles, no logos, no watermarks, no signage, no labels, no typography, no handwriting, no calligraphy, no signatures, no title cards, no text overlay";
+        const composedPrompt = `${item.prompt}. ${noTextSuffix}`;
+        try {
+          const p = await createPredictionForModel(
+            "black-forest-labs/flux-schnell",
+            {
+              prompt: composedPrompt,
+              negative_prompt:
+                "text, letter, letters, word, words, number, numbers, caption, captions, subtitle, subtitles, logo, logos, watermark, watermarks, signage, sign, signs, label, labels, typography, handwriting, calligraphy, signature, signatures, title, title card, poster text, overlay text, text overlay",
+              aspect_ratio: "9:16",
+            }
+          );
+          started.push({ conceptId: item.conceptId, predictionId: p.id });
+        } catch (err) {
+          // Fallback for models that don't support negative_prompt: retry without it
+          const p = await createPredictionForModel(
+            "black-forest-labs/flux-schnell",
+            {
+              prompt: composedPrompt,
+              aspect_ratio: "9:16",
+            }
+          );
+          started.push({ conceptId: item.conceptId, predictionId: p.id });
+        }
       }
       return { started };
     }),
