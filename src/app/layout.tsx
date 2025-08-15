@@ -6,9 +6,8 @@ import { DevQualityToggle } from "@/components/DevQualityToggle";
 import { MusicToggle } from "@/components/MusicToggle";
 
 export const metadata: Metadata = {
-  title: "New project",
-  description:
-    "A minimal starter kit with Next.js, Tailwind CSS, shadcn/ui, and tRPC",
+  title: "/create",
+  description: "Create custom books.",
 };
 
 export default function RootLayout({
