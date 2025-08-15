@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
     }
 
     const plain = [
+      `From: ${email}`,
       `Topic: ${topic}`,
       "",
       ...spreads.map((s, i) =>
@@ -35,9 +36,9 @@ export async function POST(req: NextRequest) {
     ].join("\n");
 
     const { data, error } = await resend.emails.send({
-      from: process.env.RESEND_FROM || "Orders <orders@yourdomain.com>",
+      from: "Slash Create Orders <orders@slashcreate.com>",
       to: ["joshelgar@gmail.com"],
-      subject: `New book request from ${email}: ${topic}`,
+      subject: `New book request: ${topic}`,
       text: plain,
       reply_to: email,
     } as any);
