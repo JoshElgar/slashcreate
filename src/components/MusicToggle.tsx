@@ -12,6 +12,7 @@ export function MusicToggle() {
     const audio = new Audio("/music.mp4");
     audio.loop = true;
     audio.preload = "auto";
+    audio.volume = 0.4;
     audioRef.current = audio;
 
     const handlePlay = () => setIsPlaying(true);
