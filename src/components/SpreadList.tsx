@@ -66,10 +66,14 @@ export function SpreadList() {
                 </div>
               </div>
             ))
-          : spreads.map((spread) => (
+          : spreads.map((spread, i) => (
               <SpreadItem
                 key={spread.id}
-                {...{ spread, onDelete: () => deleteSpread(spread.id) }}
+                {...{
+                  spread,
+                  index: i,
+                  onDelete: () => deleteSpread(spread.id),
+                }}
               />
             ))}
       </div>
@@ -79,9 +83,11 @@ export function SpreadList() {
 
 function SpreadItem({
   spread,
+  index,
   onDelete,
 }: {
   spread: ReturnType<typeof useBookStore.getState>["spreads"][number];
+  index: number;
   onDelete: () => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -121,7 +127,7 @@ function SpreadItem({
           </h3>
           <button
             onClick={onDelete}
-            className="inline-flex items-center justify-center size-6 border border-neutral-300 bg-white text-neutral-600 hover:bg-neutral-100 shrink-0 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity"
+            className="inline-flex items-center justify-center size-4 rounded border border-neutral-300 bg-[#dadada] text-neutral-600 hover:cursor-pointer shrink-0 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity"
             aria-label="Delete spread"
           >
             <X className="size-3" />
@@ -139,7 +145,7 @@ function SpreadItem({
           ) : null}
         </div>
         <div className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] text-white opacity-80">
-          {spread.title}
+          {index * 2 + 1}
         </div>
       </Card>
 
@@ -161,7 +167,7 @@ function SpreadItem({
           </div>
         )}
         <div className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] text-black opacity-80">
-          {spread.title}
+          {index * 2 + 2}
         </div>
       </Card>
     </div>
