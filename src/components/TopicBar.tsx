@@ -86,9 +86,13 @@ export function TopicBar() {
 
         items = spreads.map((s) => ({
           conceptId: s.id,
-          prompt: `${s.title} — topic: ${topic}. Style: ${sg.medium}${
-            sg.camera ? ", " + sg.camera : ""
-          }, ${sg.lighting}, ${sg.composition}${
+          prompt: `${
+            s.title
+          } — topic: ${topic}. A dreamy photo-illustration hybrid with cinematic depth, selective focus, volumetric light, soft bokeh, subtle film grain, painterly details. Style: ${
+            sg.medium
+          }${sg.camera ? ", " + sg.camera : ""}, ${sg.lighting}, ${
+            sg.composition
+          }${
             sg.texture ? ", " + sg.texture : ""
           }, palette ${palette}; influences ${influences}; ${pos}. No text, no captions, no subtitles, no watermarks, no logos, no signatures. Negative: ${neg}.`,
         }));
@@ -96,7 +100,7 @@ export function TopicBar() {
         // Fallback to the previous simple prompt
         items = spreads.map((s) => ({
           conceptId: s.id,
-          prompt: `High-quality illustration for "${s.title}" — topic: "${topic}". Cinematic, cohesive with the topic’s aesthetic. No text, no captions, no subtitles, no watermarks, no logos, no signatures.`,
+          prompt: `High-quality illustration for "${s.title}" — topic: "${topic}". Dreamy photo-illustration hybrid, cinematic depth, selective focus, volumetric light, soft bokeh, subtle film grain, painterly details. No text, no captions, no subtitles, no watermarks, no logos, no signatures.`,
         }));
       }
       const quality = useBookStore.getState().imageQuality;

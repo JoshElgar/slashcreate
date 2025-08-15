@@ -107,17 +107,18 @@ export const generationRouter = router({
       const userPrompt = `Topic: ${
         input.topic
       }. Create a very specific, unmistakably topic-driven visual style guide that a diffusion model can follow across many images.
+Target vibe: dreamy, midjourney-esque photo-illustration hybrid; cinematic depth; selective focus; volumetric light; soft bokeh; subtle film grain; painterly details; crisp focal points with softer supporting areas where appropriate.
 Include signature visual cues from the topic (era, place, franchise, movement, materials, production design, motifs, weather, mood). If the topic implies a strong aesthetic (e.g., cyberpunk neon rain, noir lighting, retro-futurism), encode that explicitly.
 Provide:
 - palette (3-8 cohesive hex colors that match the topic)
 - lighting (concise, cinematic/photographic lighting description)
-- medium (e.g., cinematic key art, stylized concept art, analog film photo, matte painting)
+- medium (e.g., dreamy photo-illustration hybrid, cinematic key art, stylized concept art, analog film photo, matte painting)
 - composition (framing rules and shot style)
 - camera (optional lenses/sensors/film if relevant)
 - texture (optional surface/material/film grain)
 - influences (2-6 highly relevant artists/DPs/studios/movements tied to the topic)
-- keywords (8-16 short, concrete, model-friendly tags that enforce the topic aesthetic)
-- negativeKeywords (12-20 strong blockers for any text or bland/generic looks; include: text, caption, subtitles, watermark, logo, signature, letters, words, typography, graphic design, poster, diagram, chart, meme, UI, interface, screenshot, map, sign, signage, flat vector, clip art, corporate illustration)
+- keywords (8-16 short, concrete, model-friendly tags that enforce the topic aesthetic; include terms like dreamy, photo-illustration hybrid, cinematic depth, selective focus, volumetric light, soft bokeh, film grain, painterly details when appropriate)
+- negativeKeywords (12-20 strong blockers for any text or bland/generic looks; include: text, caption, subtitles, watermark, logo, signature, letters, words, typography, graphic design, poster, diagram, chart, meme, UI, interface, screenshot, map, sign, signage, flat vector, clip art, corporate illustration, over-sharpened, uncanny valley)
 Aspect may be set if relevant.
 Consider these concept titles: ${titles ?? "(not provided)"}.
 Return only the JSON.`;
