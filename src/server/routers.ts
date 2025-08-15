@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { procedure, router } from "./trpc";
+import { generationRouter } from "./routers/generation";
 
 export const appRouter = router({
   hello: procedure
@@ -13,6 +14,7 @@ export const appRouter = router({
         greeting: `Hello ${input.name ?? "World"}!`,
       };
     }),
+  generation: generationRouter,
 });
 
 // Export type router type signature,
