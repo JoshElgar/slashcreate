@@ -64,36 +64,7 @@ export const generationRouter = router({
         text = String(completed.output);
       }
 
-      let parsed: z.infer<typeof ConceptsSchema>;
-      try {
-        parsed = ConceptsSchema.parse(JSON.parse(text));
-      } catch (err) {
-        // Retry once with an explicit JSON reminder
-        console.log("Retrying concept generation with explicit JSON reminder");
-        const retry = await createPredictionForModel("openai/gpt-5-nano", {
-          prompt:
-            userPrompt +
-            "\nReturn only valid JSON. Do not include markdown. Ensure exactly 1 paragraph (max 100 words) per concept.",
-          system_prompt: systemPrompt,
-          temperature: 0.6,
-        });
-        const again = await waitForPrediction(retry.id, {
-          intervalMs: 1200,
-          maxMs: 90_000,
-        });
-        if (again.status !== "succeeded") {
-          throw new Error(
-            `Concept generation failed: ${again.error ?? again.status}`
-          );
-        }
-        const outText =
-          typeof again.output === "string"
-            ? again.output
-            : Array.isArray(again.output)
-            ? again.output.join("")
-            : String(again.output ?? "");
-        parsed = ConceptsSchema.parse(JSON.parse(outText));
-      }
+      const parsed = ConceptsSchema.parse(JSON.parse(text));
 
       return {
         concepts: parsed.concepts,
@@ -169,35 +140,7 @@ export const generationRouter = router({
           ? completed.output.join("")
           : String(completed.output ?? "");
 
-      let parsed: z.infer<typeof StyleSchema>;
-      try {
-        parsed = StyleSchema.parse(JSON.parse(text));
-      } catch (err) {
-        console.log(
-          "Retrying style guide generation with explicit JSON reminder"
-        );
-        const retry = await createPredictionForModel("openai/gpt-5-nano", {
-          system_prompt: systemPrompt,
-          prompt: userPrompt + "\nReturn only valid JSON. No markdown.",
-          temperature: 0.5,
-        });
-        const again = await waitForPrediction(retry.id, {
-          intervalMs: 1200,
-          maxMs: 60_000,
-        });
-        if (again.status !== "succeeded") {
-          throw new Error(
-            `Style guide generation failed: ${again.error ?? again.status}`
-          );
-        }
-        const outText =
-          typeof again.output === "string"
-            ? again.output
-            : Array.isArray(again.output)
-            ? again.output.join("")
-            : String(again.output ?? "");
-        parsed = StyleSchema.parse(JSON.parse(outText));
-      }
+      const parsed = StyleSchema.parse(JSON.parse(text));
 
       // Normalize hex values to #RRGGBB
       const palette = parsed.palette.map((c) => ({
