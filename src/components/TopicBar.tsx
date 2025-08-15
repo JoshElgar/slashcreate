@@ -28,6 +28,12 @@ export function TopicBar() {
     setGenerating(true);
     reset();
     try {
+      // Notify other parts of the app that a topic has been submitted
+      window.dispatchEvent(
+        new CustomEvent("topic-submitted", { detail: { topic } })
+      );
+    } catch {}
+    try {
       const res = await generateConcepts.mutateAsync({ topic, count });
       const spreads = res.concepts.map((c, idx) => ({
         id: crypto.randomUUID(),
@@ -117,6 +123,7 @@ export function TopicBar() {
   return (
     <div className="w-full">
       <div className="mx-auto py-4">
+        <p className="mb-3 text-sm text-soft-fg">create a book about</p>
         <input
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
@@ -130,9 +137,6 @@ export function TopicBar() {
           spellCheck={false}
           className="w-full bg-transparent text-[48px] leading-none text-app-fg placeholder:text-app-fg outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50"
         />
-        <p className="mt-3 text-sm text-soft-fg">
-          this is the basis for your book
-        </p>
       </div>
     </div>
   );

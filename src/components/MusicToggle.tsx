@@ -9,14 +9,16 @@ export function MusicToggle() {
 
   useEffect(() => {
     const audio = new Audio("/music.mp4");
-    audio.loop = true;
+    audio.loop = false;
     audio.preload = "auto";
     audioRef.current = audio;
 
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
+    const handleEnded = () => setIsPlaying(false);
     audio.addEventListener("play", handlePlay);
     audio.addEventListener("pause", handlePause);
+    audio.addEventListener("ended", handleEnded);
 
     const tryPlay = async () => {
       try {
@@ -31,6 +33,7 @@ export function MusicToggle() {
     return () => {
       audio.removeEventListener("play", handlePlay);
       audio.removeEventListener("pause", handlePause);
+      audio.removeEventListener("ended", handleEnded);
       audio.pause();
       audioRef.current = null;
     };
@@ -56,6 +59,21 @@ export function MusicToggle() {
       document.removeEventListener("pointerdown", kickstartIfTopicInput, true);
       document.removeEventListener("focusin", kickstartIfTopicInput, true);
     };
+  }, []);
+
+  useEffect(() => {
+    const onTopicSubmitted = () => {
+      const audio = audioRef.current;
+      if (!audio) return;
+      try {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      } catch {}
+    };
+
+    window.addEventListener("topic-submitted", onTopicSubmitted);
+    return () =>
+      window.removeEventListener("topic-submitted", onTopicSubmitted);
   }, []);
 
   const togglePlayback = async () => {
