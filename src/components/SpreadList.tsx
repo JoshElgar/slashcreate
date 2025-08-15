@@ -51,10 +51,10 @@ export function SpreadList() {
                 key={`skeleton-${i}`}
                 className="flex space-x-2 w-auto h-auto"
               >
-                <div className="relative bg-panel border border-neutral-800 flex items-center justify-center aspect-[9/16] w-[32vw] max-w-[360px] md:w-56">
+                <div className="relative bg-panel border border-neutral-800 flex items-center justify-center aspect-[9/16] w-[32vw] max-w-[460px] md:w-56">
                   <div className="size-2.5 rounded-full bg-orange-500 animate-pulse" />
                 </div>
-                <div className="relative bg-panel border border-neutral-800 flex items-center justify-center aspect-[9/16] w-[32vw] max-w-[360px] md:w-56">
+                <div className="relative bg-panel border border-neutral-800 flex items-center justify-center aspect-[9/16] w-[32vw] max-w-[460px] md:w-56">
                   <div className="size-2.5 rounded-full bg-orange-500 animate-pulse" />
                 </div>
               </div>
