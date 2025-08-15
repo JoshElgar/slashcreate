@@ -11,7 +11,7 @@ const ConceptsSchema = z.object({
     .array(
       z.object({
         title: z.string(),
-        paragraphs: z.array(z.string()).length(4),
+        paragraphs: z.array(z.string()).length(1),
       })
     )
     .min(1),

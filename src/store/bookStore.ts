@@ -3,7 +3,7 @@ import { create } from "zustand";
 export type Spread = {
   id: string;
   title: string;
-  paragraphs: string[]; // 4
+  paragraphs: string[]; // 1
   imageUrl?: string;
   status: "textReady" | "imagePending" | "ready" | "failed";
 };
