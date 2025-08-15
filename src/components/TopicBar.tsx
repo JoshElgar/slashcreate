@@ -69,7 +69,8 @@ export function TopicBar() {
           prompt: `High-quality editorial illustration about "${s.title}" related to topic "${topic}". Minimalist, clean, neutral colors, no text, no watermarks.`,
         }));
       }
-      const started = await startImages.mutateAsync({ items });
+      const quality = useBookStore.getState().imageQuality;
+      const started = await startImages.mutateAsync({ items, quality });
       setPredictions(started.started);
     } catch (e) {
       console.error(e);

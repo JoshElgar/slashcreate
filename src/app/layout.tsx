@@ -2,6 +2,7 @@ import React from "react";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Providers } from "./providers";
+import { DevQualityToggle } from "@/components/DevQualityToggle";
 
 export const metadata: Metadata = {
   title: "New project",
@@ -17,7 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <DevQualityToggle />
+        </Providers>
       </body>
     </html>
   );

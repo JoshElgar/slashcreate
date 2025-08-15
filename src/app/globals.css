@@ -351,9 +351,9 @@
     --chart-5: 27 87% 67%;
 
     /* App custom colors (hex mapped to HSL) */
-    --app-bg: 0 0% 10.2%; /* #1a1a1a */
+    --app-bg: 0 0% 6%; /* darker background */
     --app-fg: 0 0% 85.5%; /* #dadada */
-    --panel: 0 0% 16.5%; /* #2a2a2a */
+    --panel: 0 0% 12%; /* darker panel */
     --soft-fg: 0 0% 47.8%; /* #7a7a7a */
     --soft-bg: 0 0% 98%; /* #fafafa */
   }
@@ -393,9 +393,9 @@
     --chart-5: 340 75% 55%;
 
     /* App custom colors in dark mode */
-    --app-bg: 0 0% 10.2%;
+    --app-bg: 0 0% 6%;
     --app-fg: 0 0% 85.5%;
-    --panel: 0 0% 16.5%;
+    --panel: 0 0% 12%;
     --soft-fg: 0 0% 47.8%;
     --soft-bg: 0 0% 98%;
   }

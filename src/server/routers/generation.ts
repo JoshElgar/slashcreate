@@ -161,6 +161,7 @@ export const generationRouter = router({
             prompt: z.string().min(1),
           })
         ),
+        quality: z.enum(["low", "high"]).default("low"),
       })
     )
     .mutation(async ({ input }) => {
@@ -168,13 +169,14 @@ export const generationRouter = router({
       for (const item of input.items) {
         const composedPrompt = `${item.prompt}. no text`;
         console.log("Creating image prediction for concept:", item.conceptId);
-        const p = await createPredictionForModel(
-          "black-forest-labs/flux-schnell",
-          {
-            prompt: composedPrompt,
-            aspect_ratio: "9:16",
-          }
-        );
+        const model =
+          input.quality === "high"
+            ? "google/imagen-4-fast"
+            : "black-forest-labs/flux-schnell";
+        const p = await createPredictionForModel(model, {
+          prompt: composedPrompt,
+          aspect_ratio: "9:16",
+        });
         started.push({ conceptId: item.conceptId, predictionId: p.id });
       }
       return { started };
@@ -199,12 +201,20 @@ export const generationRouter = router({
       for (const item of input.items) {
         const p = await getPrediction(item.predictionId);
         if (p.status === "succeeded") {
-          // Flux Schnell often returns output as array of image URLs
+          // Handle various output shapes (array of URLs, single URL string, or object with url)
           let url: string | undefined;
           if (Array.isArray(p.output)) {
-            url = String(p.output[0]);
+            const first = p.output[0] as unknown;
+            if (typeof first === "string") url = first;
+            else if (
+              first && typeof first === "object" && "url" in (first as any)
+            )
+              url = String((first as any).url);
           } else if (typeof p.output === "string") {
             url = p.output;
+          } else if (p.output && typeof p.output === "object") {
+            const maybeUrl = (p.output as any).url;
+            if (maybeUrl) url = String(maybeUrl);
           }
           if (!url) {
             failed.push({

@@ -18,6 +18,7 @@ type BookState = {
   isGenerating: boolean;
   hasGeneratedOnce: boolean;
   styleGuide?: StyleGuide | null;
+  imageQuality: "low" | "high";
   setTopic: (topic: string) => void;
   reset: () => void;
   setSpreads: (spreads: Spread[]) => void;
@@ -33,6 +34,7 @@ type BookState = {
   setGenerating: (value: boolean) => void;
   setHasGeneratedOnce: (value: boolean) => void;
   setStyleGuide: (style: StyleGuide | null) => void;
+  setImageQuality: (quality: "low" | "high") => void;
 };
 
 export const useBookStore = create<BookState>((set, get) => ({
@@ -42,6 +44,7 @@ export const useBookStore = create<BookState>((set, get) => ({
   isGenerating: false,
   hasGeneratedOnce: false,
   styleGuide: null,
+  imageQuality: "low",
   setTopic: (topic) => set({ topic }),
   reset: () => set({ spreads: [], predictions: {}, styleGuide: null }),
   setSpreads: (spreads) => set({ spreads }),
@@ -80,4 +83,5 @@ export const useBookStore = create<BookState>((set, get) => ({
   setGenerating: (value: boolean) => set({ isGenerating: value }),
   setHasGeneratedOnce: (value: boolean) => set({ hasGeneratedOnce: value }),
   setStyleGuide: (style) => set({ styleGuide: style }),
+  setImageQuality: (quality) => set({ imageQuality: quality }),
 }));
