@@ -36,7 +36,7 @@ export const generationRouter = router({
         "Creating concept generation prediction for topic:",
         input.topic
       );
-      const prediction = await createPredictionForModel("openai/gpt-5-nano", {
+      const prediction = await createPredictionForModel("openai/gpt-5", {
         system_prompt: systemPrompt,
         prompt: userPrompt,
         temperature: 0.7,
@@ -114,7 +114,7 @@ export const generationRouter = router({
         "Creating style guide generation prediction for topic:",
         input.topic
       );
-      const prediction = await createPredictionForModel("openai/gpt-5-nano", {
+      const prediction = await createPredictionForModel("openai/gpt-5-mini", {
         system_prompt: systemPrompt,
         prompt: userPrompt,
         temperature: 0.6,
