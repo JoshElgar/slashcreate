@@ -1,5 +1,4 @@
 import React from "react";
-import Script from "next/script";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Providers } from "./providers";
@@ -18,7 +17,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <Script async src="https://js.stripe.com/v3/buy-button.js" />
         <Providers>{children}</Providers>
       </body>
     </html>
