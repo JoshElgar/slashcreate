@@ -9,7 +9,7 @@ export default function Home() {
       <div className="col-start-2 col-span-3 row-start-2">
         <TopicBar />
       </div>
-      <div className="col-start-2 col-span-3 row-start-3 row-span-5 min-h-0">
+      <div className="col-start-2 col-span-3 row-start-3 row-span-4 min-h-0">
         <SpreadList />
       </div>
     </div>
