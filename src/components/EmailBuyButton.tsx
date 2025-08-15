@@ -91,7 +91,7 @@ export function EmailBuyButton() {
           buy
         </button>
       ) : (
-        <div className="w-full h-10 flex items-center">
+        <div className="w-full flex flex-col">
           <input
             autoFocus
             value={email}
@@ -101,10 +101,18 @@ export function EmailBuyButton() {
                 onSubmit();
               }
             }}
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="none"
+            inputMode="email"
+            spellCheck={false}
             placeholder="ENTER YOUR EMAIL"
             disabled={disabled}
-            className="w-full bg-transparent text-[24px] leading-none text-[#dadada] placeholder:text-[#dadada] outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50"
+            className="w-full h-10 bg-transparent text-[24px] leading-none text-[#dadada] placeholder:text-[#dadada] outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50"
           />
+          <span className="mt-1 text-[10px] text-[#7a7a7a]">
+            hit enter to confirm your email.
+          </span>
         </div>
       )}
     </div>
