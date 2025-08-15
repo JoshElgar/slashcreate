@@ -30,7 +30,7 @@ export const generationRouter = router({
     .mutation(async ({ input }) => {
       const systemPrompt =
         'You are generating book content. The tone should be accessible and informalm but informed. It is not an informational brochure - it\'s an interesting book written by a friend who knows a lot about the topic and is explaining the most interesting things to you in a professional way. Return strict JSON only. No prose. JSON shape: {\n  "concepts": [ { "title": string, "paragraphs": string[1] } ]\n}';
-      const userPrompt = `Topic: ${input.topic}. Generate ${input.count} interesting concepts/thoughts about the topic, simple language. Rare stories, interesting facts, etc. Don't make anything up. For each, return: title (<=7 words), paragraphs (array with 1 paragraph, 100 words max). Return only JSON: { concepts: { title: string, paragraphs: string[1] }[] }.`;
+      const userPrompt = `Topic: ${input.topic}. Generate ${input.count} interesting concepts/thoughts about the topic, simple language. Rare stories, interesting facts, etc. Don't make anything up. For each, return: title (<=3 words), paragraphs (array with 1 paragraph, 100 words max). Return only JSON: { concepts: { title: string, paragraphs: string[1] }[] }.`;
 
       console.log(
         "Creating concept generation prediction for topic:",
