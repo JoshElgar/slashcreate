@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Providers } from "./providers";
 import { DevQualityToggle } from "@/components/DevQualityToggle";
+import { MusicToggle } from "@/components/MusicToggle";
 
 export const metadata: Metadata = {
   title: "New project",
@@ -37,6 +38,7 @@ export default function RootLayout({
         <Providers>
           {children}
           <DevQualityToggle />
+          <MusicToggle />
         </Providers>
       </body>
     </html>
