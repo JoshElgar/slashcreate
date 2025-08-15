@@ -28,7 +28,7 @@ export const generationRouter = router({
     .mutation(async ({ input }) => {
       const systemPrompt =
         'You are generating book content. Return strict JSON only. No prose. JSON shape: {\n  "concepts": [ { "title": string, "paragraphs": string[1] } ]\n}';
-      const userPrompt = `Topic: ${input.topic}. Generate ${input.count} diverse concepts reflecting cuisine, history, culture, geography, daily life, arts, architecture, notable figures, and customs. For each, return: title (<=7 words), paragraphs (array with 1 paragraph, 100 words max). Return only JSON: { concepts: { title: string, paragraphs: string[1] }[] }.`;
+      const userPrompt = `Topic: ${input.topic}. Generate ${input.count} diverse concepts that perfectly encapsulate the topic  the most interesting aspects. For each, return: title (<=7 words), paragraphs (array with 1 paragraph, 100 words max). Return only JSON: { concepts: { title: string, paragraphs: string[1] }[] }.`;
 
       // Minimal input contract for Replicate OpenAI GPT-5 runner
       const prediction = await createPredictionForModel("openai/gpt-5-nano", {
