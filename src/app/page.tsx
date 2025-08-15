@@ -2,6 +2,7 @@
 
 import { TopicBar } from "@/components/TopicBar";
 import { SpreadList } from "@/components/SpreadList";
+import { StripeBuyButton } from "@/components/StripeBuyButton";
 
 export default function Home() {
   return (
@@ -12,6 +13,9 @@ export default function Home() {
       </div>
       <div className="col-start-2 col-span-3 row-start-3 row-span-4 min-h-0">
         <SpreadList />
+      </div>
+      <div className="col-start-2 col-span-3 row-start-7">
+        <StripeBuyButton />
       </div>
     </div>
   );

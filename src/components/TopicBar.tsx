@@ -62,7 +62,7 @@ export function TopicBar() {
           }}
           placeholder="ENTER A TOPIC"
           disabled={isGenerating}
-          className="w-full bg-transparent text-[48px] leading-none text-[#dadada] placeholder:text-[#dadada] outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-transparent text-[48px] leading-none text-[#dadada] placeholder:text-[#dadada] outline-none border-0 focus:border-0 focus:outline-none caret-white disabled:opacity-50"
         />
         <p className="mt-3 text-sm text-[#7a7a7a]">
           Enter a topic above to generate your book spreads.
