@@ -11,13 +11,13 @@ export default function Home() {
       <div className="col-start-1 col-span-1 row-start-1 p-4">
         <p className="text-sm text-app-fg/50 pointer-events-none">/create</p>
       </div>
-      <div className="col-start-2 col-span-8 md:col-span-3 row-start-2">
+      <div className="col-start-2! col-span-8 md:col-span-3 row-start-2">
         <TopicBar />
       </div>
-      <div className="col-start-2 col-span-8 md:col-span-3 row-start-3 row-span-4 min-h-0">
+      <div className="col-start-2! col-span-8 md:col-span-3 row-start-3 row-span-4 min-h-0">
         <SpreadList />
       </div>
-      <div className="col-start-2 col-span-8 md:col-span-3 row-start-7 flex">
+      <div className="col-start-2! col-span-8 md:col-span-3 row-start-7 flex">
         <EmailBuyButton />
       </div>
     </div>
