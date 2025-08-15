@@ -1,7 +1,272 @@
 @import "tailwindcss";
 @source "../**/*.{js,ts,jsx,tsx,mdx}";
 
+@font-face {
+  font-family: "Nighty";
+  src: url("/fonts/Nighty.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Newake";
+  src: url("/fonts/Newake.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/Geist-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GeistMono";
+  src: url("/fonts/GeistMono-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ClashDisplay";
+  src: url("/fonts/ClashDisplay-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "WorkSans";
+  src: url("/fonts/WorkSans-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vercetti";
+  src: url("/fonts/Vercetti-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Switzer";
+  src: url("/fonts/Switzer-Variable.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Array";
+  src: url("/fonts/Array-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Author";
+  src: url("/fonts/Author-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BLMelody";
+  src: url("/fonts/BLMelody-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BLMelodyMono";
+  src: url("/fonts/BLMelodyMono-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GeneralSans";
+  src: url("/fonts/GeneralSans-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HKGroteskWide";
+  src: url("/fonts/HKGroteskWide-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrainsMono";
+  src: url("/fonts/JetBrainsMono-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lora";
+  src: url("/fonts/Lora-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PlusJakartaSans";
+  src: url("/fonts/PlusJakartaSans-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Jellee";
+  src: url("/fonts/Jellee-Bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Hind";
+  src: url("/fonts/Hind-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Airone";
+  src: url("/fonts/AironeFont-Demo.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Advercase";
+  src: url("/fonts/AdvercaseFont-Demo-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atlantico";
+  src: url("/fonts/AtlanticoFont-Demo-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Comico";
+  src: url("/fonts/Comico-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Dujitsu";
+  src: url("/fonts/DujitsuFont-Demo.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kihim";
+  src: url("/fonts/Kihim-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Luckybones";
+  src: url("/fonts/Luckybones-Bold.otf") format("opentype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OffBit";
+  src: url("/fonts/OffBit-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PPMori";
+  src: url("/fonts/PPMori-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
+  /* Fonts */
+  --font-sans: "BLMelody", sans-serif;
+  --font-heading: "BLMelody", sans-serif;
+  --font-nighty: "Nighty", sans-serif;
+  --font-newake: "Newake", sans-serif;
+  --font-geist: "Geist", sans-serif;
+  --font-geistmono: "GeistMono", monospace;
+  --font-clash: "ClashDisplay", sans-serif;
+  --font-satoshi: "Satoshi", sans-serif;
+  --font-worksans: "WorkSans", sans-serif;
+  --font-vercetti: "Vercetti", sans-serif;
+  --font-switzer: "Switzer", sans-serif;
+  --font-array: "Array", sans-serif;
+  --font-author: "Author", serif;
+  --font-blmelody: "BLMelody", sans-serif;
+  --font-blmelodymono: "BLMelodyMono", monospace;
+  --font-generalsans: "GeneralSans", sans-serif;
+  --font-hkgrotesk: "HKGroteskWide", sans-serif;
+  --font-jetbrains: "JetBrainsMono", monospace;
+  --font-lora: "Lora", serif;
+  --font-jakarta: "PlusJakartaSans", sans-serif;
+  --font-jellee: "Jellee", sans-serif;
+  --font-hind: "Hind", sans-serif;
+  --font-airone: "Airone", sans-serif;
+  --font-advercase: "Advercase", sans-serif;
+  --font-atlantico: "Atlantico", sans-serif;
+  --font-comico: "Comico", sans-serif;
+  --font-dujitsu: "Dujitsu", sans-serif;
+  --font-kihim: "Kihim", sans-serif;
+  --font-luckybones: "Luckybones", sans-serif;
+  --font-offbit: "OffBit", monospace;
+  --font-ppmori: "PPMori", sans-serif;
+
   /* Map HSL custom props to Tailwind v4 color tokens */
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
