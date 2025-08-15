@@ -11,7 +11,7 @@ const ConceptsSchema = z.object({
     .array(
       z.object({
         title: z.string(),
-        paragraphs: z.array(z.string()).length(4),
+        paragraphs: z.array(z.string()).length(1),
       })
     )
     .min(1),
@@ -27,8 +27,8 @@ export const generationRouter = router({
     )
     .mutation(async ({ input }) => {
       const systemPrompt =
-        'You are generating book content. Return strict JSON only. No prose. JSON shape: {\n  "concepts": [ { "title": string, "paragraphs": string[4] } ]\n}';
-      const userPrompt = `Topic: ${input.topic}. Generate ${input.count} diverse concepts reflecting cuisine, history, culture, geography, daily life, arts, architecture, notable figures, and customs. For each, return: title (<=7 words), paragraphs (array of 4 paragraphs, 100–140 words each). Return only JSON: { concepts: { title: string, paragraphs: string[4] }[] }.`;
+        'You are generating book content. Return strict JSON only. No prose. JSON shape: {\n  "concepts": [ { "title": string, "paragraphs": string[1] } ]\n}';
+      const userPrompt = `Topic: ${input.topic}. Generate ${input.count} diverse concepts reflecting cuisine, history, culture, geography, daily life, arts, architecture, notable figures, and customs. For each, return: title (<=7 words), paragraphs (array of 1 paragraph, <= 150 words total). Write efficient, vivid prose that beautifully, accurately, and interestingly captures the essence and contextual significance of the concept. Avoid filler, dictionary-style definitions, and clichés. Return only JSON: { concepts: { title: string, paragraphs: string[1] }[] }.`;
 
       // Minimal input contract for Replicate OpenAI GPT-5 runner
       const prediction = await createPredictionForModel("openai/gpt-5-nano", {
@@ -67,7 +67,7 @@ export const generationRouter = router({
         const retry = await createPredictionForModel("openai/gpt-5-nano", {
           prompt:
             userPrompt +
-            "\nReturn only valid JSON. Do not include markdown. Ensure exactly 1 paragraph per concept.",
+            "\nReturn only valid JSON. Do not include markdown. Ensure exactly 1 paragraph per concept, each with no more than 150 words.",
           system_prompt: systemPrompt,
           temperature: 0.6,
         });
@@ -89,8 +89,22 @@ export const generationRouter = router({
         parsed = ConceptsSchema.parse(JSON.parse(outText));
       }
 
+      // Enforce hard word-limit of 150 words per page paragraph
+      const constrained = parsed.concepts.map((c) => ({
+        title: c.title,
+        paragraphs: c.paragraphs.map((p) => {
+          const words = p
+            .replace(/\s+/g, " ")
+            .trim()
+            .split(" ")
+            .filter(Boolean);
+          if (words.length <= 150) return words.join(" ");
+          return words.slice(0, 150).join(" ");
+        }),
+      }));
+
       return {
-        concepts: parsed.concepts,
+        concepts: constrained,
       };
     }),
 
