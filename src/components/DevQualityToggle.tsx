@@ -3,8 +3,6 @@
 import { useBookStore } from "@/store/bookStore";
 
 export function DevQualityToggle() {
-  if (process.env.NODE_ENV !== "development") return null;
-
   const quality = useBookStore((s) => s.imageQuality);
   const setQuality = useBookStore((s) => s.setImageQuality);
 
@@ -14,9 +12,7 @@ export function DevQualityToggle() {
         <button
           onClick={() => setQuality("low")}
           className={`px-2 py-1 rounded-full transition-colors ${
-            quality === "low"
-              ? "bg-white text-black"
-              : "hover:bg-neutral-800"
+            quality === "low" ? "bg-white text-black" : "hover:bg-neutral-800"
           }`}
           aria-pressed={quality === "low"}
         >
@@ -25,9 +21,7 @@ export function DevQualityToggle() {
         <button
           onClick={() => setQuality("high")}
           className={`ml-1 px-2 py-1 rounded-full transition-colors ${
-            quality === "high"
-              ? "bg-white text-black"
-              : "hover:bg-neutral-800"
+            quality === "high" ? "bg-white text-black" : "hover:bg-neutral-800"
           }`}
           aria-pressed={quality === "high"}
         >
@@ -37,5 +31,3 @@ export function DevQualityToggle() {
     </div>
   );
 }
-
-
