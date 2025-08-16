@@ -1,7 +1,35 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { animate } from "animejs";
+import { animate, stagger } from "animejs";
+// Local minimal text splitter: wraps each character in a span to enable per-char animation
+function splitIntoCharSpans(node: Element) {
+  const originalHTML = (node as HTMLElement).innerHTML;
+  const text = node.textContent ?? "";
+  (node as HTMLElement).innerHTML = "";
+  const spans: HTMLSpanElement[] = [];
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    const span = document.createElement("span");
+    span.style.display = "inline-block";
+    span.style.transform = "translateY(100%)";
+    span.style.opacity = "0";
+    // Preserve spaces visually
+    if (ch === " ") {
+      span.innerHTML = "&nbsp;";
+    } else {
+      span.textContent = ch;
+    }
+    (node as HTMLElement).appendChild(span);
+    spans.push(span);
+  }
+  return {
+    spans,
+    revert() {
+      (node as HTMLElement).innerHTML = originalHTML;
+    },
+  };
+}
 import { useBookStore } from "@/store/bookStore";
 import { trpc } from "@/lib/trpc";
 import { Card } from "@/components/ui/card";
@@ -39,12 +67,28 @@ export function SpreadList() {
 
   // Now a horizontally scrollable row spanning 3 columns in a larger 5x8 grid layout.
   const { isGenerating } = useBookStore();
+  const listRef = useRef<HTMLDivElement>(null);
+
+  // Stagger in cards nicely when spreads populate
+  useEffect(() => {
+    if (isGenerating) return;
+    if (!listRef.current) return;
+    const items = listRef.current.querySelectorAll(".spread-item");
+    if (!items || items.length === 0) return;
+    animate(items, {
+      opacity: [0, 1],
+      y: [12, 0],
+      duration: 600,
+      ease: "out(3)",
+      delay: stagger(80),
+    });
+  }, [isGenerating, spreads.length]);
 
   // When generating with no spreads yet, show a row of skeleton page pairs.
 
   return (
     <div className="w-full overflow-x-auto overflow-y-hidden spreads-scroll">
-      <div className="flex space-x-8 items-stretch">
+      <div ref={listRef} className="flex space-x-8 items-stretch">
         {isGenerating && spreads.length === 0
           ? Array.from({ length: 9 }).map((_, i) => (
               <div
@@ -91,19 +135,49 @@ function SpreadItem({
   onDelete: () => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (!ref.current) return;
-    animate(ref.current, {
-      opacity: [0, 1],
-      duration: 400,
-      ease: "out(3)",
-    });
+    // Per-item text split + char stagger in
+    const reverts: Array<() => void> = [];
+    try {
+      if (titleRef.current) {
+        const { spans, revert } = splitIntoCharSpans(titleRef.current);
+        reverts.push(revert);
+        if (spans.length) {
+          animate(spans, {
+            y: ["100%", "0%"],
+            opacity: [0, 1],
+            duration: 600,
+            ease: "out(3)",
+            delay: stagger(12),
+          });
+        }
+      }
+      if (contentRef.current) {
+        const paragraphs = contentRef.current.querySelectorAll("p");
+        paragraphs.forEach((p, pi) => {
+          const { spans, revert } = splitIntoCharSpans(p);
+          reverts.push(revert);
+          if (spans.length) {
+            animate(spans, {
+              y: ["100%", "0%"],
+              opacity: [0, 1],
+              duration: 550,
+              ease: "out(3)",
+              delay: stagger(6, { start: pi * 100 }),
+            });
+          }
+        });
+      }
+    } catch (e) {
+      // no-op
+    }
     return () => {
-      if (!ref.current) return;
-      animate(ref.current, {
-        opacity: 0,
-        duration: 220,
-        ease: "in(3)",
+      reverts.forEach((fn) => {
+        try {
+          fn();
+        } catch {}
       });
     };
   }, []);
@@ -111,7 +185,7 @@ function SpreadItem({
   return (
     <div
       ref={ref}
-      className="group flex gap-2 w-auto"
+      className="group flex gap-2 w-auto spread-item"
       style={{ height: "48vh" }}
     >
       {/* Left page - Text */}
@@ -120,7 +194,10 @@ function SpreadItem({
         style={{ aspectRatio: "9 / 16", height: "100%" }}
       >
         <div className="flex items-start justify-between mb-3">
-          <h3 className="text-xl font-semibold text-black leading-tight pr-2">
+          <h3
+            ref={titleRef}
+            className="text-xl font-semibold text-black leading-tight pr-2"
+          >
             {spread.title}
           </h3>
           <button
@@ -131,7 +208,10 @@ function SpreadItem({
             <X className="size-3" />
           </button>
         </div>
-        <div className="text-md leading-relaxed text-black overflow-hidden relative flex-1">
+        <div
+          ref={contentRef}
+          className="text-md leading-relaxed text-black overflow-hidden relative flex-1"
+        >
           {spread.paragraphs.length > 0 ? (
             <>
               {spread.paragraphs.map((p, i) => (
