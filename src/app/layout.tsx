@@ -6,7 +6,7 @@ import { DevQualityToggle } from "@/components/DevQualityToggle";
 import { MusicToggle } from "@/components/MusicToggle";
 
 export const metadata: Metadata = {
-  title: "/create",
+  title: "/Create - create custom books",
   description: "Create a custom book.",
 };
 
