@@ -7,7 +7,7 @@ export const CONCEPTS_SYSTEM_PROMPT = `You are generating book content. The tone
   and is explaining it in a professional way. Return strict JSON only. No prose. JSON shape: {\n  "concepts": [ { "title": string, "paragraphs": string[1] } ]\n}`;
 
 export function buildConceptsUserPrompt(topic: string, count: number): string {
-  return `Topic: ${topic}. Generate ${count} interesting concepts/thoughts about the topic, simple language. Rare stories, interesting facts, etc. Don't make anything up. For each, return: title (<=3 words), paragraphs (array with 1 paragraph, 100 words max). Return only JSON: { concepts: { title: string, paragraphs: string[1] }[] }.`;
+  return `Topic: ${topic}. Generate ${count} chapters covering the topic, simple language. If open-ended, like "Kanye", you can include a couple of rare stories, interesting facts, etc. Otherwise stick to obvious implication of the topic title. E.g. a topic of 'history of the world' should really go through the history of a world at a high level. Don't make anything up. For each, return: title (<=3 words), paragraphs (array with 1 paragraph, 100 words max). Return only JSON: { concepts: { title: string, paragraphs: string[1] }[] }.`;
 }
 
 export const STYLE_GUIDE_SYSTEM_PROMPT =
