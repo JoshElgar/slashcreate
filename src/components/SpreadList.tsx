@@ -2,24 +2,28 @@
 
 import { useEffect, useRef } from "react";
 import { animate, stagger } from "animejs";
-// Local minimal text splitter: wraps each character in a span to enable per-char animation
-function splitIntoCharSpans(node: Element) {
+// Local minimal text splitter: wraps each WORD in a span to enable per-word animation
+// This preserves natural line breaks at spaces and avoids mid-word wrapping.
+function splitIntoWordSpans(node: Element) {
   const originalHTML = (node as HTMLElement).innerHTML;
   const text = node.textContent ?? "";
   (node as HTMLElement).innerHTML = "";
   const spans: HTMLSpanElement[] = [];
-  for (let i = 0; i < text.length; i++) {
-    const ch = text[i];
+  // Split into words and whitespace, preserving spaces as separate tokens
+  const tokens = text.split(/(\s+)/);
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
+    if (token === "") continue;
+    if (/^\s+$/.test(token)) {
+      // Append whitespace as a text node so the browser can wrap at spaces
+      (node as HTMLElement).appendChild(document.createTextNode(token));
+      continue;
+    }
     const span = document.createElement("span");
     span.style.display = "inline-block";
     span.style.transform = "translateY(100%)";
     span.style.opacity = "0";
-    // Preserve spaces visually
-    if (ch === " ") {
-      span.innerHTML = "&nbsp;";
-    } else {
-      span.textContent = ch;
-    }
+    span.textContent = token;
     (node as HTMLElement).appendChild(span);
     spans.push(span);
   }
@@ -142,7 +146,7 @@ function SpreadItem({
     const reverts: Array<() => void> = [];
     try {
       if (titleRef.current) {
-        const { spans, revert } = splitIntoCharSpans(titleRef.current);
+        const { spans, revert } = splitIntoWordSpans(titleRef.current);
         reverts.push(revert);
         if (spans.length) {
           animate(spans, {
@@ -157,7 +161,7 @@ function SpreadItem({
       if (contentRef.current) {
         const paragraphs = contentRef.current.querySelectorAll("p");
         paragraphs.forEach((p, pi) => {
-          const { spans, revert } = splitIntoCharSpans(p);
+          const { spans, revert } = splitIntoWordSpans(p);
           reverts.push(revert);
           if (spans.length) {
             animate(spans, {
