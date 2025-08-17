@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useBookStore } from "@/store/bookStore";
 import { trpc } from "@/lib/trpc";
+import {
+  buildFallbackImagePrompt,
+  buildImagePromptFromStyle,
+} from "@/lib/prompts";
 
 const PLACEHOLDER_TERMS = [
   "the solar system",
@@ -96,59 +100,19 @@ export function TopicBar() {
         useBookStore.getState().setStyleGuide(styleRes.style);
 
         const sg = styleRes.style;
-        const palette = (sg.palette || [])
-          .map((c) => c.hex)
-          .slice(0, 4)
-          .join(", ");
-        const influences = (sg.influences || []).slice(0, 4).join(", ");
-        const pos = (sg.keywords || []).slice(0, 12).join(", ");
-        const neg = (
-          sg.negativeKeywords || [
-            "text",
-            "caption",
-            "subtitles",
-            "watermark",
-            "logo",
-            "signature",
-            "letters",
-            "words",
-            "typography",
-            "graphic design",
-            "poster",
-            "diagram",
-            "chart",
-            "meme",
-            "ui",
-            "interface",
-            "screenshot",
-            "map",
-            "sign",
-            "signage",
-            "flat vector",
-            "clip art",
-            "corporate illustration",
-          ]
-        )
-          .slice(0, 16)
-          .join(", ");
-
         items = spreads.map((s) => ({
           conceptId: s.id,
-          prompt: `${
-            s.title
-          } — topic: ${topic}. A midjourney-esque dreamy photo-illustration hybrid with cinematic depth, selective focus, volumetric light, subtle film grain, painterly details. Random level of softness / bokeh / blur between 0 and 10. Style: ${
-            sg.medium
-          }${sg.camera ? ", " + sg.camera : ""}, ${sg.lighting}, ${
-            sg.composition
-          }${
-            sg.texture ? ", " + sg.texture : ""
-          }, palette ${palette}; influences ${influences}; ${pos}. No text, no captions, no subtitles, no watermarks, no logos, no signatures. Negative: ${neg}.`,
+          prompt: buildImagePromptFromStyle({
+            title: s.title,
+            topic,
+            style: sg,
+          }),
         }));
       } catch (err) {
         // Fallback to the previous simple prompt
         items = spreads.map((s) => ({
           conceptId: s.id,
-          prompt: `High-quality illustration for "${s.title}" — topic: "${topic}". Dreamy photo-illustration hybrid, cinematic depth, selective focus, volumetric light, soft bokeh, subtle film grain, painterly details. No text, no captions, no subtitles, no watermarks, no logos, no signatures.`,
+          prompt: buildFallbackImagePrompt(s.title, topic),
         }));
       }
       const quality = useBookStore.getState().imageQuality;

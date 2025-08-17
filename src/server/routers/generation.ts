@@ -6,6 +6,14 @@ import {
   waitForPrediction,
 } from "../replicate";
 import { StyleGuide } from "@/types/style";
+import {
+  CONCEPTS_SYSTEM_PROMPT,
+  STYLE_GUIDE_SYSTEM_PROMPT,
+  buildConceptsUserPrompt,
+  buildStyleGuideUserPrompt,
+  STRONG_NEGATIVE,
+  STRONG_NO_TEXT,
+} from "@/lib/prompts";
 import { parseFirstJson } from "../../utils/json";
 
 const ConceptsSchema = z.object({
@@ -28,9 +36,8 @@ export const generationRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const systemPrompt =
-        'You are generating book content. The tone should be accessible and informalm but informed. It is not an informational brochure - it\'s an interesting book written by a friend who knows a lot about the topic and is explaining the most interesting things to you in a professional way. Return strict JSON only. No prose. JSON shape: {\n  "concepts": [ { "title": string, "paragraphs": string[1] } ]\n}';
-      const userPrompt = `Topic: ${input.topic}. Generate ${input.count} interesting concepts/thoughts about the topic, simple language. Rare stories, interesting facts, etc. Don't make anything up. For each, return: title (<=3 words), paragraphs (array with 1 paragraph, 100 words max). Return only JSON: { concepts: { title: string, paragraphs: string[1] }[] }.`;
+      const systemPrompt = CONCEPTS_SYSTEM_PROMPT;
+      const userPrompt = buildConceptsUserPrompt(input.topic, input.count);
 
       console.log(
         "Creating concept generation prediction for topic:",
@@ -102,28 +109,11 @@ export const generationRouter = router({
         aspect: z.string().optional(),
       });
 
-      const systemPrompt =
-        'You are an expert art director. Return strict JSON only. No prose. JSON shape: {"palette": {"hex": string}[], "lighting": string, "medium": string, "composition": string, "camera"?: string|null, "texture"?: string, "influences": string[], "keywords": string[], "negativeKeywords": string[], "aspect"?: string}';
-
-      const titles = input.conceptTitles?.slice(0, 12).join("; ");
-      const userPrompt = `Topic: ${
-        input.topic
-      }. Create a very specific, unmistakably topic-driven visual style guide that a diffusion model can follow across many images.
-Target vibe: dreamy, midjourney-esque photo-illustration hybrid; cinematic depth; selective focus; volumetric light; soft bokeh; subtle film grain; painterly details; crisp focal points with softer supporting areas where appropriate.
-Include signature visual cues from the topic (era, place, franchise, movement, materials, production design, motifs, weather, mood). If the topic implies a strong aesthetic (e.g., cyberpunk neon rain, noir lighting, retro-futurism), encode that explicitly.
-Provide:
-- palette (3-8 cohesive hex colors that match the topic)
-- lighting (concise, cinematic/photographic lighting description)
-- medium (e.g., dreamy photo-illustration hybrid, cinematic key art, stylized concept art, analog film photo, matte painting)
-- composition (framing rules and shot style)
-- camera (optional lenses/sensors/film if relevant)
-- texture (optional surface/material/film grain)
-- influences (2-6 highly relevant artists/DPs/studios/movements tied to the topic)
-- keywords (8-16 short, concrete, model-friendly tags that enforce the topic aesthetic; include terms like dreamy, photo-illustration hybrid, cinematic depth, selective focus, volumetric light, soft bokeh, film grain, painterly details when appropriate)
-- negativeKeywords (12-20 strong blockers for any text or bland/generic looks; include: text, caption, subtitles, watermark, logo, signature, letters, words, typography, graphic design, poster, diagram, chart, meme, UI, interface, screenshot, map, sign, signage, flat vector, clip art, corporate illustration, over-sharpened, uncanny valley)
-Aspect may be set if relevant.
-Consider these concept titles: ${titles ?? "(not provided)"}.
-Return only the JSON.`;
+      const systemPrompt = STYLE_GUIDE_SYSTEM_PROMPT;
+      const userPrompt = buildStyleGuideUserPrompt(
+        input.topic,
+        input.conceptTitles
+      );
 
       console.log(
         "Creating style guide generation prediction for topic:",
@@ -183,13 +173,9 @@ Return only the JSON.`;
     )
     .mutation(async ({ input }) => {
       const started: { conceptId: string; predictionId: string }[] = [];
-      const strongNoText =
-        "no text, no caption, no subtitles, no watermark, no logo, no signature, no letters, no words, no typography, no UI, no interface, no signs, no signage";
-      const strongNegative =
-        "text, caption, subtitles, watermark, logo, signature, letters, words, typography, graphic design, poster, diagram, chart, meme, ui, interface, screenshot, map, sign, signage, flat vector, clip art, corporate illustration";
 
       for (const item of input.items) {
-        const composedPrompt = `${item.prompt}. ${strongNoText}`;
+        const composedPrompt = `${item.prompt}. ${STRONG_NO_TEXT}`;
         console.log("Creating image prediction for concept:", item.conceptId);
         const model =
           input.quality === "high"
@@ -201,7 +187,7 @@ Return only the JSON.`;
         };
         // Provide model-specific negative prompts where supported
         if (model === "black-forest-labs/flux-schnell") {
-          (inputPayload as any).negative_prompt = strongNegative;
+          (inputPayload as any).negative_prompt = STRONG_NEGATIVE;
         }
         const p = await createPredictionForModel(model, inputPayload);
         started.push({ conceptId: item.conceptId, predictionId: p.id });
