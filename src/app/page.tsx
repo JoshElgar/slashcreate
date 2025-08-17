@@ -1,10 +1,33 @@
 "use client";
 
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { TopicBar } from "@/components/TopicBar";
 import { SpreadList } from "@/components/SpreadList";
 import { EmailBuyButton } from "../components/EmailBuyButton";
+import { useBookStore } from "@/store/bookStore";
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  const { topic, setTopic } = useBookStore();
+
+  useEffect(() => {
+    if (!searchParams) return;
+    if (topic) return;
+
+    let initial = searchParams.get("topic") || searchParams.get("q");
+
+    if (!initial) {
+      const first = searchParams.entries().next();
+      if (!first.done) {
+        const [, value] = first.value;
+        initial = value || "";
+      }
+    }
+
+    if (initial) setTopic(initial);
+  }, [searchParams, topic, setTopic]);
+
   return (
     <div className="h-screen grid grid-cols-10 md:grid-cols-5 grid-rows-8 bg-app-bg text-app-fg overflow-hidden relative">
       <div className="pointer-events-none absolute inset-0 [background:radial-gradient(80%_50%_at_50%_100%,_rgba(255,255,255,0.05),_transparent_70%)]" />
