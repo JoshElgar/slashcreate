@@ -87,9 +87,9 @@ export function EmailBuyButton() {
           >
             buy
           </button>
-          <span className="mt-1 text-sm text-soft-fg">
+          {/* <span className="mt-1 text-sm text-soft-fg">
             we will email you with details
-          </span>
+          </span> */}
         </div>
       ) : (
         <div ref={inputWrapRef} className="w-full flex flex-col">
