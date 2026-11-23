@@ -4,7 +4,7 @@ Homepage for /create, a UK actuator manufacturer focused on defence.
 
 Run `npm ci` and `npm run dev` to preview locally. Run `npm run build` to build for Vercel.
 
-The Contact link uses `hello@slashcreate.com`. Confirm the address receives mail before publishing.
+The contact link uses `luc@slashcreate.com`, which forwards to Luc through Cloudflare Email Routing.
 
 ## Photography
 

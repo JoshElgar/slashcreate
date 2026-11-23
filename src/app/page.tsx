@@ -3,7 +3,7 @@ import { ArrowDown, ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { ProcessRecords } from "@/components/process-records";
 import { Button } from "@/components/ui/button";
 
-const contactEmail = "hello@slashcreate.com";
+const contactEmail = "luc@slashcreate.com";
 
 const stages = [
   ["Enquiry", "#enquiry"],
