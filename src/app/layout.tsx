@@ -1,45 +1,25 @@
-import React from "react";
-import "./globals.css";
 import type { Metadata } from "next";
-import { Providers } from "./providers";
-import { DevQualityToggle } from "@/components/DevQualityToggle";
-import { MusicToggle } from "@/components/MusicToggle";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "/Create - create custom books",
-  description: "Create a custom book.",
+  metadataBase: new URL("https://www.slashcreate.com"),
+  title: "/create — Actuators for Defence",
+  description: "Actuator assemblies for defence. From drawing and quotation through to inspection and delivery.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "en_GB",
+    title: "/create — Actuators for Defence",
+    description: "Actuator assemblies for defence. From drawing to delivery.",
+    url: "/",
+    images: [{ url: "/manufacturing/cnc-machining.webp", width: 1920, height: 1080 }],
+  },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link
-          rel="preload"
-          href="/fonts/BLMelody-Regular.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/Geist-Regular.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-      </head>
-      <body>
-        <Providers>
-          {children}
-          <DevQualityToggle />
-          <MusicToggle />
-        </Providers>
-      </body>
+    <html lang="en-GB">
+      <body>{children}</body>
     </html>
   );
 }
